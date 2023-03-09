@@ -1,5 +1,9 @@
-import { View } from 'react-native';
+import { Container, Indicator } from './styles';
 
 export const  Loading =()=>{
-    return (<View></View>)
+    return (
+    <Container>
+        <Indicator/>
+
+    </Container>)
 }
