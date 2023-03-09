@@ -1,8 +1,10 @@
-export default {
+import { DefaultTheme } from 'styled-components/native';
+
+export const themes: DefaultTheme = {
     COLORS:{
         background: '#DEDEDE',
         brand_green_light: '#E5F0DB',
-        brand_gree_mid: '#CBE4B4',
+        brand_green_mid: '#CBE4B4',
         brand_green_dark: '#639339',
         brand_red_light: '#F4E6E7',
         brand_red_mid: '#F3BABD',

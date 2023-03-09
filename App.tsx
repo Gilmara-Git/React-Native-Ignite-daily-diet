@@ -1,4 +1,7 @@
 
+import { ThemeProvider } from 'styled-components/native';
+import { themes } from './src/themes';
+import { Loading } from '@components/Loading';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
@@ -9,14 +12,19 @@ export default function App() {
 
 
   return (
-    
+    <ThemeProvider theme={themes}>
+
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {!fontsLoaded ? <View><Text>....Loading</Text></View>: 
+      {!fontsLoaded ? 
+      <Loading />
+      
+      : 
       
       <Text>Open up App.tsx to start working on your app!</Text>
-      }
+    }
     </View>
+    </ThemeProvider>
   );
 }
 
