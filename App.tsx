@@ -1,10 +1,12 @@
 
-import { ThemeProvider } from 'styled-components/native';
+import { StatusBar } from 'react-native';
 import { themes } from './src/themes';
-import { Loading } from '@components/Loading';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from 'styled-components/native';
 import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
+import { Home } from '@screens/Home';
+import { Loading } from '@components/Loading';
+
+
 
 
 export default function App() {
@@ -12,27 +14,22 @@ export default function App() {
 
 
   return (
-    <ThemeProvider theme={themes}>
+    <ThemeProvider theme={themes}> 
+      <StatusBar 
+        backgroundColor='#DEDEDE'
+        barStyle="dark-content" 
+        />
 
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {!fontsLoaded ? 
+      { !fontsLoaded ? 
+      
       <Loading />
       
       : 
       
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Home />
     }
-    </View>
+  
     </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
