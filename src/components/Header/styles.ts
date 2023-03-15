@@ -18,7 +18,7 @@ export const Image = styled.Image`
     height: 37px;
 `;
 
-export const AvatarWrapper = styled.View`
+export const AvatarWrapper = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
     `;
@@ -27,6 +27,6 @@ export const Avatar =  styled.Image`
     width: 100%;
     height: 100%;
     border-radius: 50px; 
-    /* border: 1px solid ${({theme})=>theme.COLORS.base_gray_200} */
-   
+    border-width: 2px;
+    border-color:${({theme})=>theme.COLORS.base_gray_200}; 
 `
