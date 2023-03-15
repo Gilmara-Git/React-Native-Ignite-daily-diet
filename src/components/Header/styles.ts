@@ -27,5 +27,6 @@ export const Avatar =  styled.Image`
     width: 100%;
     height: 100%;
     border-radius: 50px; 
-    border: 2px ${({theme})=> theme.COLORS.base_gray_200};
+    /* border: 1px solid ${({theme})=>theme.COLORS.base_gray_200} */
+   
 `

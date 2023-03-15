@@ -16,7 +16,7 @@ export default function App() {
   return (
     <ThemeProvider theme={themes}> 
       <StatusBar 
-        backgroundColor='#DEDEDE'
+        backgroundColor='#FFFFFF'
         barStyle="dark-content" 
         />
 
