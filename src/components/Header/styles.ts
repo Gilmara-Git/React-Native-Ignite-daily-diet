@@ -21,12 +21,16 @@ export const Image = styled.Image`
 export const AvatarWrapper = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
+    border-width: 2px;
+    border-color:${({theme})=>theme.COLORS.base_gray_200};
+    justify-content: center;
+    align-items: center; 
+    border-radius: 50px; 
+    padding: 1px
     `;
 
 export const Avatar =  styled.Image`
-    width: 100%;
+    width: 100%;;
     height: 100%;
     border-radius: 50px; 
-    border-width: 2px;
-    border-color:${({theme})=>theme.COLORS.base_gray_200}; 
 `
