@@ -3,8 +3,11 @@ import { useState } from 'react';
 import { Header } from '@components/Header';
 import { NewMealButton } from '@components/NewMealButton';
 import { StatisticBox } from '@components/StatisticBox';
+import { SectionListItem } from '@components/SectionListComponents/SectionListItem';
+import { SectionListHeader } from '@components/SectionListComponents/SectionListHeader';
 import { useTheme } from 'styled-components/native';
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, SectionList, View, Text } from 'react-native';
+import { DATA } from '@utils/mealsData';
 
 export const Home =()=>{
     const [ percentage, setPercentage ]  = useState(90.86);
@@ -26,16 +29,28 @@ export const Home =()=>{
                 /> 
              <MealsTitleContainer style={{width: width > 750 ? 650 : 327}}>
                     <Title>
-                        Meals
+                        Meals List
                     </Title>      
 
              </MealsTitleContainer>
              <MealsDetailContainer style={{width: width > 750 ? 650 : 327}}>
+                <NewMealButton icon="plus" onPress={handleNewReceipt}/>
+                <SectionList 
+                    showsVerticalScrollIndicator={false}
+                    sections={DATA}
+                    keyExtractor={(item, index)=>item.name + index}
+                    renderItem={({item})=>(<SectionListItem widthDimensions={width} time={item.time} mealName={item.name} indicatorColor={item.colorIndicator}/>)}
+                    renderSectionHeader={({section: {date}})=>(
+                        <SectionListHeader title={date}/> 
+                    )}
+                
+                />
 
-                <NewMealButton onPress={handleNewReceipt}/>
+
+
              </MealsDetailContainer>
 
-               
+
         </Container>
             
     )
