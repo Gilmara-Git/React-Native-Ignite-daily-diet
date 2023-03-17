@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 type HeaderStyleProps = {
-    dimensions : number;
+    widthDimensions : number;
 }
 
 export const Container = styled.View<HeaderStyleProps>`
@@ -10,7 +10,7 @@ export const Container = styled.View<HeaderStyleProps>`
     align-items: center;  
     width: 100%;
     margin-bottom: 24px;
-    padding: ${({dimensions})=> dimensions > 750 ? 24 : 0}px;
+    padding: ${({widthDimensions})=> widthDimensions > 750 ? 24 : 0}px;
 `;
 
 export const Image = styled.Image`
@@ -26,11 +26,12 @@ export const AvatarWrapper = styled.TouchableOpacity`
     justify-content: center;
     align-items: center; 
     border-radius: 50px; 
-    padding: 1px
+    /* padding: 0.5px */
     `;
 
 export const Avatar =  styled.Image`
-    width: 100%;;
+    width: 100%;
     height: 100%;
     border-radius: 50px; 
+    overflow: hidden;
 `

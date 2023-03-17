@@ -37,6 +37,7 @@ Figma Layout:
 - Styled Components
 - AsyncStorage
 - png images(strategy of 3 different sizes)
+- "react-native-svg-transformer"
 
 # App creation
 Project was created using **expo init appName --npm*** 

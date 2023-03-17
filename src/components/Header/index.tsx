@@ -46,7 +46,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <Container dimensions={width}>
+    <Container widthDimensions={width}>
       <Image source={Logo} />
       <AvatarWrapper onPress={getImageHandler}>
         {!imageUrl ? (
