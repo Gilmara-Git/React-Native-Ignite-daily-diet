@@ -23,8 +23,7 @@ export const Title = styled.Text`
         font-family: ${theme.FONT_FAMILY.NunitoRegular400}
 
     `}
-    font-size: 16px;
-    width: 69px;
+    font-size: 16px;  
     height: 21px;
      
 `;

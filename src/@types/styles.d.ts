@@ -13,6 +13,7 @@ declare module 'styled-components/native'{
             base_white: string,
             base_gray_100:  string,
             base_gray_200: string,
+            base_gray_400: string,
             base_gray_500: string,
             base_gray_600: string,
             base_gray_700: string

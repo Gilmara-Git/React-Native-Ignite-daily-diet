@@ -12,6 +12,7 @@ export const themes: DefaultTheme = {
         base_white: '#FFFFFF',
         base_gray_100:  '#1B1D1E',
         base_gray_200: '#333638',
+        base_gray_400: '#B9BBBC',
         base_gray_500: '#DDDEDF',
         base_gray_600: '#EFF0F0',
         base_gray_700: '#FAFAFA'
