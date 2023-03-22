@@ -1,3 +1,6 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
+import { RoutesParamList } from '@routes/routesTypes';
 import BackArrow from '@assets/back.svg';
 import { useWindowDimensions } from 'react-native';
 import { 
@@ -23,10 +26,15 @@ type StatisticsScreenProps = {
  
 }
 
-export const StatisticsScreen = ({ color, title, description }:StatisticsScreenProps)=>{
+type StatisticsNavigationProps = {
+    navigation: NativeStackNavigationProp<RoutesParamList, 'statistics'>
+}
 
+export const StatisticsScreen = ({ navigation }:StatisticsNavigationProps)=>{
     const { width }  = useWindowDimensions();
-    console.log(width)
+    const { params }  = useRoute();
+    const { color, description , title } =  params as StatisticsScreenProps;
+
     
     const handleBack = ()=>{
         console.log('I am the handle back button')
@@ -50,7 +58,7 @@ export const StatisticsScreen = ({ color, title, description }:StatisticsScreenP
                 <GeneralText>General Statistics</GeneralText>
                 <RectangleBox>
                     <NumericInfo>22</NumericInfo>
-                    <TextInfo>better sequence of meal within your diet</TextInfo>
+                    <TextInfo>better sequence of meals within your diet</TextInfo>
                 </RectangleBox>
 
                 <RectangleBox>
