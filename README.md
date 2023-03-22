@@ -19,8 +19,8 @@ Figma Layout:
   
  # Motivation
 
-- Learn how to style the interfaces/components using the **lib styled components** for react native.
-- Learn how to work with ***Expo Image Picker*** to allow the user to upload an image from their mobile device. 
+<!-- - Learn how to style the interfaces/components using the **lib styled components** for react native.
+- Learn how to work with ***Expo Image Picker*** to allow the user to upload an image from their mobile device.  -->
 - Practice ***React Navigation v6*** (***Stack Navigation*** was used)
 - Interact with the Dev Community, learn together and progress as a Developer.
 - Keep committed with my goals.</br>
