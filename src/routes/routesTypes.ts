@@ -3,7 +3,9 @@ export type RoutesParamList = {
     statistics : {
         color: string,
         description: string,
-        title: string
+        title: string,
+        arrowColor: string,
 
-    }
+    },
+    new_meal: undefined;
 }

@@ -22,6 +22,7 @@ type StatisticsScreenProps = {
     color: string;
     title: string;
     description: string;
+    arrowColor: string;
  
  
 }
@@ -33,21 +34,21 @@ type StatisticsNavigationProps = {
 export const StatisticsScreen = ({ navigation }:StatisticsNavigationProps)=>{
     const { width }  = useWindowDimensions();
     const { params }  = useRoute();
-    const { color, description , title } =  params as StatisticsScreenProps;
-
+    const { color, description , title, arrowColor } =  params as StatisticsScreenProps;
+   // Vou precisar passar os mais 8 parametros para esta tela depois
     
     const handleBack = ()=>{
-        console.log('I am the handle back button')
+        navigation.goBack();
     };
     
     return (
         <Container style={{width: width > 750 ? width : 375}}>
-            <StatsHeaderBox >
+            <StatsHeaderBox color={color}>
                 <BackArrowButton  
                     activeOpacity={0.5}
                     onPress={handleBack}
                     >
-                    <BackArrow fill={color}/>
+                    <BackArrow fill={arrowColor}/>
                 </BackArrowButton>
                 <HeaderPercentage>{title}</HeaderPercentage>
                 <HeaderDescription>{description}</HeaderDescription>
