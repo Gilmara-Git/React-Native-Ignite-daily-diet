@@ -1,14 +1,18 @@
 import styled, { css } from "styled-components/native";
 
+type HeaderBoxStyleProps = {
+  color: string;
+}
+
 export const Container = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme.COLORS.base_gray_700};
   flex: 1;
 `;
 
-export const StatsHeaderBox = styled.View`
+export const StatsHeaderBox = styled.View<HeaderBoxStyleProps>`
   height: 200px;
-  background-color: ${({ theme }) => theme.COLORS.brand_green_light};
+  background-color: ${({ color }) => color };
   align-items: center;
   justify-content: center;
   width: 100%;

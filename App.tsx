@@ -6,6 +6,7 @@ import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/
 import { Home } from '@screens/Home';
 import { StatisticsScreen } from '@screens/StatisticsScreen';
 import { Loading } from '@components/Loading';
+import { Routes } from '@routes/index';
 
 
 
@@ -27,13 +28,7 @@ export default function App() {
       
       : 
       
-      <StatisticsScreen 
-        // widthDimensions={375} 
-        color="#639339" 
-        title="90.86%" 
-        description="of your meals within your diet"
-        />
-      // <Home/>
+      <Routes />
     }
   
     </ThemeProvider>

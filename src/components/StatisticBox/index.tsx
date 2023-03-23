@@ -11,6 +11,9 @@ import ArrowRed from "@assets/openArrow.svg";
 type StatisticProps = StatisticStyleProps & {
   arrowColor: string;
   percentage: number;
+  textInfo: string;
+  onClick: ()=>void
+
 };
 
 export const StatisticBox = ({
@@ -18,23 +21,24 @@ export const StatisticBox = ({
   widthDimensions,
   arrowColor,
   percentage,
+  textInfo,
+  onClick  
+ 
 }: StatisticProps) => {
-  const handleStatisticDetails = () => {
-    console.log("I was clicked android");
-  };
 
+  
   return (
     <Container
       dynamicBackground={dynamicBackground}
       widthDimensions={widthDimensions}
     >
-      <IconContainer onPress={handleStatisticDetails} activeOpacity={0.2}>
+      <IconContainer onPress={onClick} activeOpacity={0.2}>
         <ArrowRed fill={arrowColor} />
       </IconContainer>
 
       <StatsInfo>
         <Percentage>{percentage}%</Percentage>
-        <PercentageText>of meals within diet plan</PercentageText>
+        <PercentageText>{textInfo}</PercentageText>
       </StatsInfo>
     </Container>
   );

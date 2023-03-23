@@ -22,6 +22,12 @@ declare module 'styled-components/native'{
         FONT_FAMILY:{
             NunitoRegular400: string,
             NunitoBold700: string,
+        }, 
+        FONT_SIZE:{
+            SM: number;
+            MD: number;
+            XL: number;
+
         }
     }
 }

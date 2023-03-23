@@ -1,3 +1,6 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
+import { RoutesParamList } from '@routes/routesTypes';
 import BackArrow from '@assets/back.svg';
 import { useWindowDimensions } from 'react-native';
 import { 
@@ -19,27 +22,33 @@ type StatisticsScreenProps = {
     color: string;
     title: string;
     description: string;
+    arrowColor: string;
  
  
 }
 
-export const StatisticsScreen = ({ color, title, description }:StatisticsScreenProps)=>{
+type StatisticsNavigationProps = {
+    navigation: NativeStackNavigationProp<RoutesParamList, 'statistics'>
+}
 
+export const StatisticsScreen = ({ navigation }:StatisticsNavigationProps)=>{
     const { width }  = useWindowDimensions();
-    console.log(width)
+    const { params }  = useRoute();
+    const { color, description , title, arrowColor } =  params as StatisticsScreenProps;
+   // Vou precisar passar os mais 8 parametros para esta tela depois
     
     const handleBack = ()=>{
-        console.log('I am the handle back button')
+        navigation.goBack();
     };
     
     return (
         <Container style={{width: width > 750 ? width : 375}}>
-            <StatsHeaderBox >
+            <StatsHeaderBox color={color}>
                 <BackArrowButton  
                     activeOpacity={0.5}
                     onPress={handleBack}
                     >
-                    <BackArrow fill={color}/>
+                    <BackArrow fill={arrowColor}/>
                 </BackArrowButton>
                 <HeaderPercentage>{title}</HeaderPercentage>
                 <HeaderDescription>{description}</HeaderDescription>
@@ -50,7 +59,7 @@ export const StatisticsScreen = ({ color, title, description }:StatisticsScreenP
                 <GeneralText>General Statistics</GeneralText>
                 <RectangleBox>
                     <NumericInfo>22</NumericInfo>
-                    <TextInfo>better sequence of meal within your diet</TextInfo>
+                    <TextInfo>better sequence of meals within your diet</TextInfo>
                 </RectangleBox>
 
                 <RectangleBox>
