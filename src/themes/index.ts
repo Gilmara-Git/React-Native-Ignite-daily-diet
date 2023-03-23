@@ -21,5 +21,10 @@ export const themes: DefaultTheme = {
     FONT_FAMILY:{
         NunitoRegular400: 'Nunito_400Regular',
         NunitoBold700: 'Nunito_700Bold',
+    }, 
+    FONT_SIZE:{
+        SM: 14,
+        MD: 18,
+        XL: 32
     }
 }
