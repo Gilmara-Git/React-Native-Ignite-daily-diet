@@ -6,7 +6,7 @@ import {
   PercentageText,
 } from "./styles";
 import { StatisticStyleProps } from "./styles";
-import ArrowRed from "@assets/openArrow.svg";
+import OpenStatisticsArrow from "@assets/openArrow.svg";
 
 type StatisticProps = StatisticStyleProps & {
   arrowColor: string;
@@ -33,7 +33,7 @@ export const StatisticBox = ({
       widthDimensions={widthDimensions}
     >
       <IconContainer onPress={onClick} activeOpacity={0.2}>
-        <ArrowRed fill={arrowColor} />
+        <OpenStatisticsArrow fill={arrowColor} />
       </IconContainer>
 
       <StatsInfo>

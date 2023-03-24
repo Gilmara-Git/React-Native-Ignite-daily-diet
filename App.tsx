@@ -3,10 +3,10 @@ import { StatusBar } from 'react-native';
 import { themes } from './src/themes';
 import { ThemeProvider } from 'styled-components/native';
 import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
-import { Home } from '@screens/Home';
-import { StatisticsScreen } from '@screens/StatisticsScreen';
 import { Loading } from '@components/Loading';
 import { Routes } from '@routes/index';
+import { NewMeal } from '@screens/NewMeal';
+import { StatisticsScreen } from '@screens/StatisticsScreen'; 
 
 
 
@@ -27,7 +27,8 @@ export default function App() {
       <Loading />
       
       : 
-      
+      // <StatisticsScreen/>
+      // <NewMeal />
       <Routes />
     }
   

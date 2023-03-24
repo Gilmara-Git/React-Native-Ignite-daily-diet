@@ -15,16 +15,22 @@ export const ColoredHeader = ({
     fontSize, 
     arrowColor, 
     left, 
+    subtitle,
+    top,
     onClick }: ColoredHeaderProps)=>{
+
     return (
     <StatsHeaderBox 
         height={height}
-        backgroundColor={backgroundColor}    
+        backgroundColor={backgroundColor}  
+        subtitle={subtitle ? subtitle : ''}  
         >
         <BackArrowButton
             left={left}
+            top={top}
             activeOpacity={0.5}
             onPress={onClick}
+            subtitle={subtitle ? subtitle : ''} 
         >
             <BackArrow fill={arrowColor}/>
         </BackArrowButton>
@@ -32,6 +38,13 @@ export const ColoredHeader = ({
         <Title fontSize={fontSize}>
             {title}
         </Title>
-
+            
+            { subtitle && 
+        
+            <Subtitle>
+                {subtitle}
+            </Subtitle>
+            
+            }
     </StatsHeaderBox>)
 }

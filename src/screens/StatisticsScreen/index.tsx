@@ -1,14 +1,17 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useState  } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useRoute } from '@react-navigation/native';
 import { RoutesParamList } from '@routes/routesTypes';
 import BackArrow from '@assets/back.svg';
+import { ColoredHeader } from '@components/ColoredHeader';
 import { useWindowDimensions } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { 
     Container, 
-    StatsHeaderBox, 
-    BackArrowButton, 
-    HeaderPercentage , 
-    HeaderDescription, 
+    
+    // BackArrowButton, 
+    // HeaderPercentage , 
+    // HeaderDescription, 
     General,
     GeneralText,
     RectangleBox,
@@ -21,8 +24,9 @@ import {
 type StatisticsScreenProps = {
     color: string;
     title: string;
-    description: string;
+    subtitle: string;
     arrowColor: string;
+    percentage: number;
  
  
 }
@@ -31,19 +35,38 @@ type StatisticsNavigationProps = {
     navigation: NativeStackNavigationProp<RoutesParamList, 'statistics'>
 }
 
-export const StatisticsScreen = ({ navigation }:StatisticsNavigationProps)=>{
+export const StatisticsScreen = ({navigation}:StatisticsNavigationProps)=>{
+ 
     const { width }  = useWindowDimensions();
     const { params }  = useRoute();
-    const { color, description , title, arrowColor } =  params as StatisticsScreenProps;
-   // Vou precisar passar os mais 8 parametros para esta tela depois
+    const theme = useTheme();
+    const { color, subtitle , title, arrowColor , percentage } =  params as StatisticsScreenProps;
+
     
-    const handleBack = ()=>{
+    const handleBackHome = ()=>{
         navigation.goBack();
+       
     };
     
+  
     return (
         <Container style={{width: width > 750 ? width : 375}}>
-            <StatsHeaderBox color={color}>
+             <ColoredHeader
+                height={200}
+                backgroundColor={color}
+                fontSize={theme.FONT_SIZE.XL}
+                arrowColor={arrowColor}
+                title={title}
+                subtitle={subtitle}
+                left={32}
+                onClick={handleBackHome}
+                top={56}
+           
+                
+            />
+             
+           
+            {/* <StatsHeaderBox color={color}>
                 <BackArrowButton  
                     activeOpacity={0.5}
                     onPress={handleBack}
@@ -53,7 +76,7 @@ export const StatisticsScreen = ({ navigation }:StatisticsNavigationProps)=>{
                 <HeaderPercentage>{title}</HeaderPercentage>
                 <HeaderDescription>{description}</HeaderDescription>
 
-            </StatsHeaderBox>
+            </StatsHeaderBox> */}
 
             <General style={{width: width > 750 ? width : 375}}>
                 <GeneralText>General Statistics</GeneralText>

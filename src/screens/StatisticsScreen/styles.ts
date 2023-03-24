@@ -10,38 +10,6 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const StatsHeaderBox = styled.View<HeaderBoxStyleProps>`
-  height: 200px;
-  background-color: ${({ color }) => color };
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-
-export const HeaderPercentage = styled.Text`
-  ${({ theme }) => css`
-  color: ${theme.COLORS.base_gray_100};
-  font-family: ${theme.FONT_FAMILY.NunitoBold700};
-  `}
-  
-  font-size: 32px;
-  `;
-
-  export const BackArrowButton = styled.TouchableOpacity`
-    position: absolute;
-    left: 20px;
-    top: 45px;
-  `;
-export const HeaderDescription = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.COLORS.base_gray_200};
-    font-family: ${theme.FONT_FAMILY.NunitoRegular400};
-  `}
-
-  font-size: 14px;
-`;
-
 export const General = styled.View`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
