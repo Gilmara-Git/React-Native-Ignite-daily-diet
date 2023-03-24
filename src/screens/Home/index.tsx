@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import { Header } from "@components/Header";
 import { NewMealButton } from "@components/NewMealButton";
-import { StatisticBox } from "@components/StatisticBox";
+import { StatisticBox } from "@components/HomeScreenComponents/StatisticBox";
 import { SectionListItem } from "@components/SectionListComponents/SectionListItem";
 import { SectionListHeader } from "@components/SectionListComponents/SectionListHeader";
 import { useTheme } from "styled-components/native";
@@ -24,17 +24,20 @@ export const Home = ({navigation} : HomeNavigationProps) => {
   const [percentage, setPercentage] = useState(90.86);
   const { width } = useWindowDimensions();
   const theme = useTheme();
+  const description =  'of meals within diet plan';
+  console.log(typeof percentage, 'linha28')
 
-  const handleNavigation = ()=>{
+  const handleStatisticsNavigation = ()=>{
     navigation.navigate('statistics', {  
-      description: 'of meals within diet plan', 
-      title: `${percentage}%` ,
       color: Number(`${percentage}`) > 50 ? `${theme.COLORS.brand_green_light}` : `${theme.COLORS.brand_red_light}`,
-      arrowColor: Number(`${percentage}`) > 50 ? `${theme.COLORS.brand_green_dark}` : `${theme.COLORS.brand_red_dark}`
+      subtitle: `${description}`, 
+      title: `${percentage}%` ,
+      arrowColor: Number(`${percentage}`) > 50 ? `${theme.COLORS.brand_green_dark}` : `${theme.COLORS.brand_red_dark}`,
+      percentage: Number(`${percentage}`)
     });
   }
 
-  const handleNewMeal = () => {
+  const handleNewMealNavigation = () => {
     navigation.navigate("new_meal");
   };
 
@@ -42,8 +45,8 @@ export const Home = ({navigation} : HomeNavigationProps) => {
     <Container>
       <Header />
       <StatisticBox
-        onClick = {handleNavigation}
-        textInfo="of meals within diet plan"
+        onClick = {handleStatisticsNavigation}
+        textInfo={description}
         percentage={percentage}
         dynamicBackground={
           percentage > 50
@@ -61,7 +64,7 @@ export const Home = ({navigation} : HomeNavigationProps) => {
         <Title>Meals List</Title>
       </MealsTitleContainer>
       <MealsDetailContainer style={{ width: width > 750 ? 650 : 327 }}>
-        <NewMealButton icon="plus" onPress={handleNewMeal} />
+        <NewMealButton icon="plus" onPress={handleNewMealNavigation} />
         <SectionList
           showsVerticalScrollIndicator={false}
           sections={DATA}

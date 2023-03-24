@@ -10,7 +10,7 @@ type NewMealNavigationProps = {
 
 export const NewMeal =({navigation}: NewMealNavigationProps)=>{
     const theme = useTheme();
-    console.log(theme)
+
     const handleReturnHome =()=>{
         navigation.navigate('home');
     }
@@ -25,6 +25,7 @@ export const NewMeal =({navigation}: NewMealNavigationProps)=>{
                 title="New Meal"
                 left={32}
                 onClick={handleReturnHome}
+                top={56}
             />
         </Container>
     )

@@ -2,9 +2,10 @@ export type RoutesParamList = {
     home: undefined;
     statistics : {
         color: string,
-        description: string,
+        subtitle: string,
         title: string,
         arrowColor: string,
+        percentage: number
 
     },
     new_meal: undefined;

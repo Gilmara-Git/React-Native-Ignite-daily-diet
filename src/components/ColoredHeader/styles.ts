@@ -6,11 +6,13 @@ export type ColoredHeaderStyledProps = {
     fontSize: number;
     left?: number;
     top?: number;
+    subtitle?: string;
 }
 
 type StatsHeaderBoxStyledProps = {
     height: number;
     backgroundColor: string;
+    subtitle: string;
 }
 
 type TitleStyledProps = {
@@ -20,6 +22,7 @@ type TitleStyledProps = {
 type BackArrowProps = {
   left?: number;
   top?: number;
+  subtitle: string;
 }
 
 
@@ -29,8 +32,7 @@ export const StatsHeaderBox = styled.View<StatsHeaderBoxStyledProps>`
   background-color: ${({ backgroundColor }) => backgroundColor };
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-`;
+  flex-direction: ${({ subtitle})=> !subtitle ? 'row' : 'column'}`;
 
 
 export const Title = styled.Text<TitleStyledProps>`
@@ -44,12 +46,13 @@ export const Title = styled.Text<TitleStyledProps>`
     ${({ theme }) => css`
       color: ${theme.COLORS.base_gray_200};
       font-family: ${theme.FONT_FAMILY.NunitoRegular400};
-      font-size: ${theme.FONT_SIZE.SM}
+      font-size: ${theme.FONT_SIZE.SM}px;
     `}
   `;
 
   export const BackArrowButton = styled.TouchableOpacity<BackArrowProps>`
     position: absolute;
      left: ${({left })=> left}px;
+     top: ${({top  })=> top}px;
    
   `;
