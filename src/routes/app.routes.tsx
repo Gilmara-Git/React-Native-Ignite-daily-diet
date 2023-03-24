@@ -1,7 +1,7 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '@screens/Home';
-import { StatisticsScreen } from '@screens/StatisticsScreen';
 import { NewMeal } from '@screens/NewMeal';
+import { StatisticsScreen } from '@screens/StatisticsScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 

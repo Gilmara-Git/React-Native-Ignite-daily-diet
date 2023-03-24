@@ -28,8 +28,6 @@ export const Header = () => {
         await setAvatar(result.assets[0].uri);
         fetchStoredAvatar();
 
-        // This was before implementing AsyncStorage
-        // setImageUrl({ url : result.assets[0].uri })
       }
     } catch (error) {
       Alert.alert("An error occurred", `${error}`);
