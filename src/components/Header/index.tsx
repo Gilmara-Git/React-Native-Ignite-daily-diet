@@ -14,6 +14,7 @@ type AvatarType = {
 export const Header = () => {
   const [imageUrl, setImageUrl] = useState<AvatarType>();
   const { width } = useWindowDimensions();
+
   
   const getImageHandler = async () => {
     try {
@@ -37,7 +38,10 @@ export const Header = () => {
 
   const fetchStoredAvatar = async () => {
     const avatar = await getAvatar();
-    setImageUrl({ url: avatar});
+    if(avatar){
+      setImageUrl({ url: avatar});
+
+    }
   };
   useEffect(() => {
     fetchStoredAvatar();
