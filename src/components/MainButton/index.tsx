@@ -11,6 +11,7 @@ type NewMealButtonProps = TouchableOpacityProps &{
     border?: string;
     height: number;
     width: number;
+   
 };
 
 export const MainButton =({ 
@@ -21,15 +22,16 @@ export const MainButton =({
     titleColor, 
     border,
     height,
-    width,
+    width,   
     ...rest}:NewMealButtonProps)=>{
+
+   
     return (
         <NewButton
             backgroundColor={backgroundColor}
             height={height}
-            width={width}
+            width={width}      
             activeOpacity={0.7}
-        
         {...rest }
 
         >
