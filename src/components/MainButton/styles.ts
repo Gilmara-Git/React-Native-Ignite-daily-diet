@@ -6,6 +6,7 @@ type NewButtonStyleProps = {
   backgroundColor: string;
   height: number;
   width: number;
+
 }
 
 type IconStyleProps = {
@@ -25,6 +26,7 @@ export const NewButton = styled(TouchableOpacity)<NewButtonStyleProps>`
   width: ${({ width }) => width }px;
   border-radius: 6px;
   gap: 8px;
+
 `;
 
 export const PlusIcon = styled(AntDesign).attrs<IconStyleProps>(({ iconColor }) => ({
