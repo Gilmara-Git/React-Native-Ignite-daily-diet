@@ -28,6 +28,7 @@ export const MainButton =({
             backgroundColor={backgroundColor}
             height={height}
             width={width}
+            activeOpacity={0.7}
         
         {...rest }
 

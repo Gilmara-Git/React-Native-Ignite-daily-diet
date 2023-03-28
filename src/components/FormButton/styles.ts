@@ -3,14 +3,18 @@ import styled, { css } from 'styled-components/native';
 type NewButtonStyleProps = {
     width: number;
     backgroundColor: string;
+    border?: number;
+    borderColor?: string;
     
 }
 
 export const Container = styled.TouchableOpacity<NewButtonStyleProps>`
-    ${({backgroundColor, width})=> css`
-        width: ${width}px;
-        height: 50px;
+    ${({backgroundColor, width, border, borderColor})=> css`
         background-color: ${backgroundColor};
+        width: ${width}px;
+        border-width: ${border}px;
+        border-color: ${borderColor};
+        height: 50px;
         border-radius: 6px;
         align-items: space-between;
         justify-content: center;

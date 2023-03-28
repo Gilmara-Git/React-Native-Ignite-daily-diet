@@ -24,13 +24,14 @@ export const NewButton = styled(TouchableOpacity)<NewButtonStyleProps>`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width }px;
   border-radius: 6px;
+  gap: 8px;
 `;
 
 export const PlusIcon = styled(AntDesign).attrs<IconStyleProps>(({ iconColor }) => ({
   color: iconColor,
   size: 18,
 }))`
-  margin-right: 15px;
+
 `;
 
 export const ButtonTitle = styled.Text<ButtonTitleStyleProps>`
