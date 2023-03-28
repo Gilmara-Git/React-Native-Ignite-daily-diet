@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`    
-    width: 74px;
-    /* height: 23px; */
+    width: 74px; 
     font-size: 18px;
  
 `

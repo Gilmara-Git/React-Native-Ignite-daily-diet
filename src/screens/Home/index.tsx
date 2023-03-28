@@ -6,7 +6,7 @@ import {
 } from "./styles";
 import { useState } from "react";
 import { Header } from "@components/Header";
-import { NewMealButton } from "@components/NewMealButton";
+import { MainButton } from "@components/MainButton";
 import { StatisticBox } from "@components/HomeScreenComponents/StatisticBox";
 import { SectionListItem } from "@components/SectionListComponents/SectionListItem";
 import { SectionListHeader } from "@components/SectionListComponents/SectionListHeader";
@@ -25,7 +25,7 @@ export const Home = ({navigation} : HomeNavigationProps) => {
   const { width } = useWindowDimensions();
   const theme = useTheme();
   const description =  'of meals within diet plan';
-  console.log(typeof percentage, 'linha28')
+
 
   const handleStatisticsNavigation = ()=>{
     navigation.navigate('statistics', {  
@@ -64,7 +64,14 @@ export const Home = ({navigation} : HomeNavigationProps) => {
         <Title>Meals List</Title>
       </MealsTitleContainer>
       <MealsDetailContainer style={{ width: width > 750 ? 650 : 327 }}>
-        <NewMealButton icon="plus" onPress={handleNewMealNavigation} />
+        <MainButton 
+            backgroundColor={theme.COLORS.base_gray_200}
+            title='New Meal'
+            titleColor={theme.COLORS.base_white}
+            height={50}
+            width={width > 750 ? 650 : 327}
+            icon="plus" onPress={handleNewMealNavigation}
+            iconColor={theme.COLORS.base_white} />
         <SectionList
           showsVerticalScrollIndicator={false}
           sections={DATA}

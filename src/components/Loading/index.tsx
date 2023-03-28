@@ -1,10 +1,9 @@
-import { Container, Indicator } from './styles';
+import { Container, Indicator } from "./styles";
 
-
-export const  Loading =()=>{
-   
-    return (
+export const Loading = () => {
+  return (
     <Container>
-        <Indicator/>
-    </Container>)
-}
+      <Indicator />
+    </Container>
+  );
+};
