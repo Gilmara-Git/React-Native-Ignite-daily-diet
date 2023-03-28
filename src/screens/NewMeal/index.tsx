@@ -106,7 +106,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
 
             <FieldHolder>
               <Label>Hour</Label>
-              <FieldWrapper direction="row" justify="space-between">
+              <FieldWrapper direction="row" justify="space-between" gap={4}>
                 <FormInput
                   width={width > 750 ? 250 : 110}
                   height={48}
@@ -144,7 +144,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
           <FieldWrapper direction="row" justify="space-between">
             <FieldHolder>
               <Label>Is this meal within your Diet ?</Label>
-              <FieldWrapper direction="row" justify="space-between">
+              <FieldWrapper direction="row" justify="space-between" gap={8}>
                 <FormButton
                   width={width > 750 ? 315 : 160}
                   backgroundColor={theme.COLORS.base_gray_600}
