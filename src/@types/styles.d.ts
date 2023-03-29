@@ -27,6 +27,7 @@ declare module 'styled-components/native'{
             SM: number;
             Between_SM_MD: number;
             MD: number;
+            L: number;
             XL: number;
 
         }

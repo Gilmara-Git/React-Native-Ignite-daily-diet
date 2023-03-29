@@ -26,6 +26,7 @@ export const themes: DefaultTheme = {
         SM: 14,
         Between_SM_MD: 16,
         MD: 18,
+        L: 24,
         XL: 32
     }
 }
