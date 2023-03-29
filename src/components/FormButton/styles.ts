@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native';
+import { TouchableOpacity } from 'react-native';
 
 type NewButtonStyleProps = {
     width: number;
@@ -8,7 +9,7 @@ type NewButtonStyleProps = {
     
 }
 
-export const Container = styled.TouchableOpacity<NewButtonStyleProps>`
+export const Container = styled(TouchableOpacity)<NewButtonStyleProps>`
     ${({backgroundColor, width, border, borderColor})=> css`
         background-color: ${backgroundColor};
         width: ${width}px;
@@ -26,14 +27,6 @@ export const Container = styled.TouchableOpacity<NewButtonStyleProps>`
     justify-content: center;
  
 `;
-
-export const DotContainer = styled.Image`
-    width: 8px;
-    height: 8px;
-    margin-right: 10px;
-
-`;
-
 
 export const Title = styled.Text`
 ${({theme})=>css`

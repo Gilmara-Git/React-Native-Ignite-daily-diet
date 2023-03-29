@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components/native';
+import  { TouchableOpacity } from 'react-native';
 
 
 
@@ -8,7 +9,7 @@ type ButtonTitleStyledProps = {
     fFamily: string;
 }
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled(TouchableOpacity)`
     width: 28px;
     height: 28px;
     border-radius: 50px;
