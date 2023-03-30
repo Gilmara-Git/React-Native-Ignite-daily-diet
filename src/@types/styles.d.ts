@@ -25,8 +25,9 @@ declare module 'styled-components/native'{
         }, 
         FONT_SIZE:{
             SM: number;
-            Between_SM_MD: number;
+            BMD: number;
             MD: number;
+            BL: number;
             L: number;
             XL: number;
 
