@@ -1,18 +1,20 @@
-import { NewButton, PlusIcon, ButtonTitle } from './styles';
+import { Container, ButtonIcon, ButtonTitle } from './styles';
 import { TouchableOpacityProps } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 
 type NewMealButtonProps = TouchableOpacityProps &{
-    icon?: keyof typeof AntDesign.glyphMap;
+    icon?: keyof typeof Feather.glyphMap;
     iconColor?: string;
     backgroundColor: string;
     title: string;
     titleColor: string;
-    border?: string;
     height: number;
     width: number;
-   
+    borderWidth?: number;
+    borderColor?: string;
+
 };
+
 
 export const MainButton =({ 
     icon,
@@ -20,23 +22,26 @@ export const MainButton =({
     backgroundColor, 
     title, 
     titleColor, 
-    border,
     height,
-    width,   
+    width, 
+    borderWidth,
+    borderColor,  
     ...rest}:NewMealButtonProps)=>{
-
+       
    
     return (
-        <NewButton
+        <Container
+            activeOpacity={0.7}
+            width={width}      
             backgroundColor={backgroundColor}
             height={height}
-            width={width}      
-            activeOpacity={0.7}
-        {...rest }
+            borderColor={borderColor}              
+            borderWidth={borderWidth ? borderWidth : 0}
+            {...rest }
 
         >
             { icon && 
-            <PlusIcon 
+            <ButtonIcon 
                 name={icon}
                 iconColor={iconColor}
                 />
@@ -45,6 +50,6 @@ export const MainButton =({
             <ButtonTitle titleColor={titleColor}>
                 {title}
             </ButtonTitle>
-        </NewButton>
+        </Container>
     )
 };
