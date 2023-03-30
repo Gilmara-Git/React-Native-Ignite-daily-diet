@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import styled, { css } from "styled-components/native";
 
@@ -6,6 +6,8 @@ type NewButtonStyleProps = {
   backgroundColor: string;
   height: number;
   width: number;
+  borderWidth?: number;
+  borderColor?: string;
 
 }
 
@@ -17,19 +19,22 @@ type ButtonTitleStyleProps = {
   titleColor: string;
 }
 
-export const NewButton = styled(TouchableOpacity)<NewButtonStyleProps>`
+export const Container = styled(TouchableOpacity)<NewButtonStyleProps>`
+${({backgroundColor, height,width , borderWidth, borderColor })=>css`
+      background-color: ${backgroundColor};
+      height: ${height}px;
+      width: ${width}px;
+      border-width: ${borderWidth}px;
+      border-color: ${borderColor};
+`}
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  height: ${({ height }) => height}px;
-  width: ${({ width }) => width }px;
   border-radius: 6px;
   gap: 8px;
-
 `;
 
-export const PlusIcon = styled(AntDesign).attrs<IconStyleProps>(({ iconColor }) => ({
+export const ButtonIcon = styled(Feather).attrs<IconStyleProps>(({ iconColor }) => ({
   color: iconColor,
   size: 18,
 }))`

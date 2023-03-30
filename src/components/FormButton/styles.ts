@@ -22,9 +22,10 @@ export const Container = styled(TouchableOpacity)<NewButtonStyleProps>`
         gap: 8px;
     
     `}
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6px;
  
 `;
 

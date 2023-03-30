@@ -7,9 +7,9 @@ import { useState , useEffect } from 'react';
 import { useTheme } from 'styled-components/native';
 import WithinDietImage from '@assets/illustration_withinDiet.svg';
 import OutsideDietImage from '@assets/illustration_outsideDiet.svg';
-import { Text } from 'react-native';
 
-type FeedbackParams = {   
+
+export type DietParams = {   
     activeButtonContent: string;
     
 }
@@ -20,27 +20,30 @@ type FeedbackNavigationProps = {
 
 export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     const [title, setTitle] = useState("");
-    const [ description, setDescription ] = useState("");
+    const [ initialDescription, setInitialDescription ] = useState("");
+    const [ endDescription, setEndDescription ] = useState("");
     const [ boldDescription, setBoldDescription ] = useState("");
     const theme = useTheme();
     const  { params } = useRoute();
-    const {activeButtonContent } = params as FeedbackParams;
+    const {activeButtonContent } = params as DietParams;
 
 
 
     const handleBackHome = ()=>{
-        navigation.navigate("home")
+        navigation.navigate("show_meal", { activeButtonContent })
     }
 
     useEffect(()=>{
         if(activeButtonContent === 'Yes'){
             setTitle('Keep it up!');
-            setDescription('You are  Pretty good!');
-            setBoldDescription('keeping your diet.')
+            setInitialDescription('You are ');
+            setBoldDescription('keeping your diet. ');
+            setEndDescription('Pretty good!');
         }else{
             setTitle('Maybe next time!');
-            setDescription('You this time, but do not give up!');
-            setBoldDescription('got outside of your diet.')
+            setInitialDescription('You ');
+            setBoldDescription('got outside of your diet ');
+            setEndDescription('this time, but do not give up!');
         }
 
     }, [])
@@ -48,13 +51,15 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
         <Container>
             <Title textColor={activeButtonContent === 'Yes' ? theme.COLORS.brand_green_dark :theme.COLORS.brand_red_dark}>{title}</Title>
             <Description textColor={theme.COLORS.base_gray_200}>
-                {description}
+                {initialDescription}
                 <BoldDescription>{boldDescription}</BoldDescription>
-                </Description>
+                {endDescription}
+            </Description>
+
             { activeButtonContent === 'Yes' ? 
-                <WithinDietImage style={{marginBottom: 30}}/>
+                <WithinDietImage style={{marginBottom: 40}}/>
                 :
-                <OutsideDietImage style={{marginBottom: 30}}/>
+                <OutsideDietImage style={{marginBottom: 40}}/>
             }
 
             <MainButton

@@ -59,7 +59,7 @@ export const Label = styled.Text`
   color: ${theme.COLORS.base_gray_200};
   
   `}
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 `;
 export const BottomContainer = styled.View`
   flex: 1;

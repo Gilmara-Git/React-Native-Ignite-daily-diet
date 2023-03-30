@@ -24,8 +24,9 @@ export const themes: DefaultTheme = {
     }, 
     FONT_SIZE:{
         SM: 14,
-        Between_SM_MD: 16,
+        BMD: 16,
         MD: 18,
+        BL: 20,
         L: 24,
         XL: 32
     }
