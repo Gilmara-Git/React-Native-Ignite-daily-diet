@@ -12,6 +12,9 @@ export type RoutesParamList = {
     feedback: {
         activeButtonContent: string;
     },
-    show_meal: undefined
+    show_meal: {
+        activeButtonContent: string;
+    },
+    edit_meal: undefined,
 
 }

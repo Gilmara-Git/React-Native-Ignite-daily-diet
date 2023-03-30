@@ -4,6 +4,7 @@ export const Container = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme.COLORS.base_gray_700};
   flex: 1;
+  width: 100%;
 `;
 
 export const General = styled.View`
@@ -13,8 +14,8 @@ export const General = styled.View`
   transform: translateY(-30px);
   flex-grow: 1;
   align-items: center;
-  padding-right: 24px;
-  padding-left: 24px;
+  padding-right: 12px;
+  /* padding-left: 24px; */
 `;
 
 export const GeneralText = styled.Text`

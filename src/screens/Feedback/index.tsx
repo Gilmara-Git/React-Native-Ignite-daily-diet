@@ -7,9 +7,9 @@ import { useState , useEffect } from 'react';
 import { useTheme } from 'styled-components/native';
 import WithinDietImage from '@assets/illustration_withinDiet.svg';
 import OutsideDietImage from '@assets/illustration_outsideDiet.svg';
-import { Text } from 'react-native';
 
-type FeedbackParams = {   
+
+export type DietParams = {   
     activeButtonContent: string;
     
 }
@@ -25,12 +25,12 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     const [ boldDescription, setBoldDescription ] = useState("");
     const theme = useTheme();
     const  { params } = useRoute();
-    const {activeButtonContent } = params as FeedbackParams;
+    const {activeButtonContent } = params as DietParams;
 
 
 
     const handleBackHome = ()=>{
-        navigation.navigate("home")
+        navigation.navigate("show_meal", { activeButtonContent })
     }
 
     useEffect(()=>{
@@ -57,9 +57,9 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
             </Description>
 
             { activeButtonContent === 'Yes' ? 
-                <WithinDietImage style={{marginBottom: 30}}/>
+                <WithinDietImage style={{marginBottom: 40}}/>
                 :
-                <OutsideDietImage style={{marginBottom: 30}}/>
+                <OutsideDietImage style={{marginBottom: 40}}/>
             }
 
             <MainButton

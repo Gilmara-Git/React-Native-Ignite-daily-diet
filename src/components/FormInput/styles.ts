@@ -16,11 +16,11 @@ ${({width, height, theme, borderColor , borderWidth })=>css`
     height: ${height}px;
     border-color: ${borderColor};
     border-width: ${borderWidth}px;
-    font-size: ${theme.FONT_SIZE.Between_SM_MD}px;
+    font-size: ${theme.FONT_SIZE.BMD}px;
     font-family: ${theme.FONT_FAMILY.NunitoRegular400};
     
     `}
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     padding: 14px;
     border-radius: 6px;
 

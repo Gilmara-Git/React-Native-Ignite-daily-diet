@@ -27,10 +27,10 @@ import {
 } from "react-native";
 
 type NewMealNavigationProps = {
-  navigation: NativeStackNavigationProp<RoutesParamList, "new_meal">;
+  navigation: NativeStackNavigationProp<RoutesParamList, "edit_meal">;
 };
 
-export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
+export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
   const [isAmPm, setIsAmPm] = useState("Am");
   const [description, setDescription] = useState("");
   const [mealName, setMealName] = useState("");
@@ -55,13 +55,13 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
     setActiveButtonContent(value);
   };
   
-  const handledNewMeal = ()=>{
+  const handledEditMeal = ()=>{
     if(!activeButtonContent){
      return Alert.alert('Meal within your diet?', 'Please check Yes or No.')
     }
-    // get all data, mount the object (Stringify it ) and save in ASyncStorage
-    //save a new Meal on the AsyncStorage
-    navigation.navigate("feedback", { activeButtonContent});
+    // get all the data, mount the object and save it on the AsyncStorage
+    // take client back to the home screen
+    navigation.navigate("home");
   } 
 
 
@@ -78,7 +78,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
             backgroundColor={theme.COLORS.base_gray_500}
             fontSize={theme.FONT_SIZE.MD}
             arrowColor={theme.COLORS.base_gray_200}
-            title="New Meal"
+            title="Edit Meal"
             left={32}
             onClick={handleReturnHome}
             top={56}
@@ -193,16 +193,14 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
           </InnerContainer>
         
             <BottomContainer>
-            <MainButton
-              backgroundColor={theme.COLORS.base_gray_200}
-              title="Create Meal"
-              titleColor={theme.COLORS.base_white}
-              height={50}
-              width={width > 750 ? 650 : 327}
-              onPress={handledNewMeal}
-              
-          
-          />
+              <MainButton
+                backgroundColor={theme.COLORS.base_gray_200}
+                title="Save changes"
+                titleColor={theme.COLORS.base_white}
+                height={50}
+                width={width > 750 ? 650 : 327}
+                onPress={handledEditMeal}
+              />
           </BottomContainer>
         </Container>
         </TouchableWithoutFeedback>

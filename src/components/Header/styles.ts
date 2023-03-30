@@ -10,7 +10,7 @@ export const Container = styled.View<HeaderStyleProps>`
     align-items: center;  
     width: 100%;
     margin-bottom: 24px;
-    padding: ${({widthDimensions})=> widthDimensions > 750 ? 24 : 0}px;
+    padding: ${({widthDimensions})=> widthDimensions > 750 ? 24 : 10}px;
 `;
 
 export const Image = styled.Image`

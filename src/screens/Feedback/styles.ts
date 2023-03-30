@@ -22,7 +22,7 @@ export const Title = styled.Text<TextStyleProps>`
         color: ${textColor};
         font-size: ${theme.FONT_SIZE.L}px;
         font-family: ${theme.FONT_FAMILY.NunitoBold700}
-        margin-bottom: 15px;
+        margin: 10px 15px;
        
     `
 }
@@ -31,9 +31,9 @@ export const Title = styled.Text<TextStyleProps>`
 export const Description = styled.Text<TextStyleProps>`
     ${({textColor, theme})=>css`
         color: ${textColor};
-        font-size: ${theme.FONT_SIZE.Between_SM_MD}px;
+        font-size: ${theme.FONT_SIZE.BMD}px;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 50px;
         font-family: ${theme.FONT_FAMILY.NunitoRegular400}
       
     `}
