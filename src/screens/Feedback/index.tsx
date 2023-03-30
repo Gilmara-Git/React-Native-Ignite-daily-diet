@@ -20,7 +20,8 @@ type FeedbackNavigationProps = {
 
 export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     const [title, setTitle] = useState("");
-    const [ description, setDescription ] = useState("");
+    const [ initialDescription, setInitialDescription ] = useState("");
+    const [ endDescription, setEndDescription ] = useState("");
     const [ boldDescription, setBoldDescription ] = useState("");
     const theme = useTheme();
     const  { params } = useRoute();
@@ -35,12 +36,14 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     useEffect(()=>{
         if(activeButtonContent === 'Yes'){
             setTitle('Keep it up!');
-            setDescription('You are  Pretty good!');
-            setBoldDescription('keeping your diet.')
+            setInitialDescription('You are ');
+            setBoldDescription('keeping your diet. ');
+            setEndDescription('Pretty good!');
         }else{
             setTitle('Maybe next time!');
-            setDescription('You this time, but do not give up!');
-            setBoldDescription('got outside of your diet.')
+            setInitialDescription('You ');
+            setBoldDescription('got outside of your diet ');
+            setEndDescription('this time, but do not give up!');
         }
 
     }, [])
@@ -48,9 +51,11 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
         <Container>
             <Title textColor={activeButtonContent === 'Yes' ? theme.COLORS.brand_green_dark :theme.COLORS.brand_red_dark}>{title}</Title>
             <Description textColor={theme.COLORS.base_gray_200}>
-                {description}
+                {initialDescription}
                 <BoldDescription>{boldDescription}</BoldDescription>
-                </Description>
+                {endDescription}
+            </Description>
+
             { activeButtonContent === 'Yes' ? 
                 <WithinDietImage style={{marginBottom: 30}}/>
                 :

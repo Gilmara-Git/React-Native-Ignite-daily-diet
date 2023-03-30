@@ -22,7 +22,8 @@ import {
   Keyboard,
   Alert,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  ScrollView
 } from "react-native";
 
 type NewMealNavigationProps = {
@@ -67,7 +68,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}
     >
-    
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <ColoredHeader
@@ -203,6 +204,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
           </BottomContainer>
         </Container>
         </TouchableWithoutFeedback>
+        </ScrollView>
     </KeyboardAvoidingView>
    
   );
