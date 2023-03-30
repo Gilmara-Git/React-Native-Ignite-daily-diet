@@ -37,7 +37,7 @@ export const Home = ({navigation} : HomeNavigationProps) => {
     });
   }
 
-  const handleNewMealNavigation = () => {
+  const handleNewMealNavigation = () => {  
     navigation.navigate("new_meal");
   };
 
