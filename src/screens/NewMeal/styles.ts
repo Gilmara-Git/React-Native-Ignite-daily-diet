@@ -7,7 +7,8 @@ type FormStyleProps = {
 
 type FieldWrapperStyleProps = {
   direction: string;
-  justify: string
+  justify: string;
+  gap?: number;
 
 }
 
@@ -39,12 +40,13 @@ export const Form = styled.View<FormStyleProps>`
 `
 
 export const FieldWrapper = styled.View<FieldWrapperStyleProps>`
-  ${({direction, justify})=>css`
+  ${({direction, justify, gap })=>css`
   flex-direction: ${direction};
   justify-content: ${ justify };
+  /* gap: ${gap}px; */
   
   `}
-  gap: 8px;
+ 
 
 `
 

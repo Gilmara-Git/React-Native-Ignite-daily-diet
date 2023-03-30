@@ -6,12 +6,14 @@ type AmPmProps = TouchableOpacityProps & {
     title: string;
     fSize: number;
     fFamily: string;
-    onClick: ()=>void;
+  
 }
 
-export const  AmPmButton = ({ color, title, fSize, fFamily, onClick }: AmPmProps)=> {
+export const  AmPmButton = ({ color, title, fSize, fFamily, ...rest }: AmPmProps)=> {
     return (
-    <Container onPress={onClick}>
+    <Container
+        {...rest}
+    >
         <Title 
             color={color}
             fSize={fSize}

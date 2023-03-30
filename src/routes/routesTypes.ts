@@ -1,5 +1,5 @@
 export type RoutesParamList = {
-    home: undefined;
+    home: undefined,
     statistics : {
         color: string,
         subtitle: string,
@@ -8,5 +8,8 @@ export type RoutesParamList = {
         percentage: number
 
     },
-    new_meal: undefined;
+    new_meal: undefined,
+    feedback: {
+        activeButtonContent: string;
+    }
 }
