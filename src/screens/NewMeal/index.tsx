@@ -121,7 +121,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                   <FormInput
                     width={width > 750 ? 315 : 153}
                     height={48}
-                    placeholder="00/00/00"
+                    placeholder="00.00.00"
                   />
                 </FieldHolder>
 
