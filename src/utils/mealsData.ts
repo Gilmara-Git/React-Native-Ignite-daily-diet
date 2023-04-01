@@ -1,5 +1,5 @@
 export const DATA = [{
-    date:"09.12.22", 
+    date:"09/12/22", 
     data: [ 
         { name:'Cheese-X', time: '08:00 pm', colorIndicator:'#F3BABD'}, 
         { name:'Whey Protein with Almond Milk', time: '04:00 pm', colorIndicator:'#CBE4B4'}, 

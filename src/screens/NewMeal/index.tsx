@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Container,
   InnerContainer,
@@ -6,16 +6,16 @@ import {
   Label,
   FieldWrapper,
   FieldHolder,
-  BottomContainer
-} from "./styles";
-import { ColoredHeader } from "@components/ColoredHeader";
-import { MainButton } from "@components/MainButton";
-import { AmPmButton } from "@components/AmPmButton";
-import { FormButton } from "@components/FormButton";
-import { FormInput } from "@components/FormInput";
-import { useTheme } from "styled-components/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RoutesParamList } from "@routes/routesTypes";
+  BottomContainer,
+} from './styles'
+
+import { ColoredHeader } from '@components/ColoredHeader';
+import { MainButton } from '@components/MainButton';
+import { FormButton } from '@components/FormButton';
+import { FormInput } from '@components/FormInput';
+import { useTheme } from 'styled-components/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RoutesParamList } from '@routes/routesTypes';
 import {
   useWindowDimensions, 
   TouchableWithoutFeedback,
@@ -23,29 +23,96 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
-} from "react-native";
+  ScrollView,
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+import { getMeals } from '@storage/meals/getMeals';
 
 type NewMealNavigationProps = {
-  navigation: NativeStackNavigationProp<RoutesParamList, "new_meal">;
+  navigation: NativeStackNavigationProp<RoutesParamList, 'new_meal'>;
 };
 
 export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
-  const [isAmPm, setIsAmPm] = useState("Am");
-  const [description, setDescription] = useState("");
-  const [mealName, setMealName] = useState("");
-  const [ activeButtonContent, setActiveButtonContent ] = useState("");
-
+  const [isAmPm, setIsAmPm] = useState('Am');
+  const [ activeButtonContent, setActiveButtonContent ] = useState('');
   const theme = useTheme();
   const { width } = useWindowDimensions();
+
+  const [mealName, setMealName] = useState('');
+  const [description, setDescription] = useState('');
+  const [ date, setDate ] = useState<object>(new Date());
+ 
+  const [ time, setTime] = useState('');
+  const [ dateString, setDateString]  = useState('');
+  const [ mode, setMode ] = useState('date'); // allows to switch to date and time
+  const [ showTime, setShowTime ] = useState(false);
+  const [ showDate, setShowDate ] = useState(false);
+
+
+
+  
+  const showMode = (currentMode: string)=>{   
+    currentMode === 'date'? setShowDate(true) :  setShowTime(true);
+    setMode(currentMode);
+
+  };
+  
+
+  const onChange = (event: object, selectedDate: object)=>{
+ 
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+    let tempDate = new Date(String(currentDate));
+    if(mode === 'date'){
+      setShowDate(Platform.OS === 'ios');
+      let fDate = tempDate.getMonth() + 1 + '/' + tempDate.getDate() + '/' + tempDate.getFullYear();
+      setDateString(fDate);
+      setShowDate(false);
+
+    }else {
+      setShowTime(Platform.OS === 'ios');
+      const usTime = tempDate.toLocaleTimeString('en-US');
+      const usTimeList = usTime.split('');  
+      
+      if(usTimeList.length < 11){
+        usTimeList.unshift('0');
+
+      }
+        usTimeList.splice(5,4);
+        const fPop = usTimeList.pop();
+        const sPop = usTimeList.pop();
+        const fTime = usTimeList.join('') + ' ' + sPop + fPop;
+        setTime(fTime);  
+        setShowTime(false);
+      
+    }
+   
+  };
+
 
   const handleReturnHome = () => {
     navigation.navigate('home');
   };
 
+  const handleMealName =(value: string) => {
+   
+    setMealName(value)
+   
+  };
+
   const handleDescription = (value: string) => {
     setDescription(value);
   };
+
+  const handleDate = (value: string) => {
+    setDate(value);
+  };
+
+  const handleTime = (value: string) => {
+    setTime(value);
+  };
+
 
   const handleAmPm = (value: string) => {
     setIsAmPm(value);
@@ -55,15 +122,43 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
     setActiveButtonContent(value);
   };
   
-  const handledNewMeal = ()=>{
+  const handledNewMeal = async()=>{
     if(!activeButtonContent){
-     return Alert.alert('Meal within your diet?', 'Please check Yes or No.')
+     return Alert.alert('Meal within your diet?', 'Please check Yes or No.') 
     }
+    // const teste = await getMeals();
+
+ if(!mealName.trim()){
+     return Alert.alert('Please fill out your Meal name.');
+    }
+
+    if(!description.trim()){
+      return Alert.alert('Please describe your Meal.');
+     }
+
+    //  if(!date.trim()){
+    //   return Alert.alert('Please pick a date.');
+    //  }
+
+     if(!time.trim()){
+      return Alert.alert('Please pick a time.');
+     }
+    const newMeal = { date: '02.03.23' , data: [{ name: mealName, time: '', description: description, withinDiet:'' }]}
+    console.log(newMeal, 'linha66')
+
     // get all data, mount the object (Stringify it ) and save in ASyncStorage
     //save a new Meal on the AsyncStorage
     navigation.navigate("feedback", { activeButtonContent});
   } 
 
+  const handleFocus =(value: string)=>{
+    showMode(value);
+
+  }
+
+  const handleBlur = ()=>{
+    // setShow(false)
+  }
 
   return (
     <KeyboardAvoidingView
@@ -93,6 +188,8 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                     width={width > 750 ? 650 : 327}
                     height={48}
                     placeholder="Meal name"
+                    value={mealName}
+                    onChangeText={handleMealName}
                   />
                 </FieldWrapper>
               </FieldHolder>
@@ -111,61 +208,75 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                     autoCorrect={false}
                     value={description}
                     onChangeText={handleDescription}
+                   
                   />
                 </FieldWrapper>
               </FieldHolder>
 
-              <FieldWrapper direction="row" justify="space-between">
-                <FieldHolder>
-                  <Label>Date</Label>
-                  <FormInput
-                    width={width > 750 ? 315 : 153}
-                    height={48}
-                    placeholder="00.00.00"
-                  />
-                </FieldHolder>
-
-                <FieldHolder>
-                  <Label>Hour</Label>
-                  <FieldWrapper direction="row" justify="space-between" gap={4}>
-                    <FormInput
-                      width={width > 750 ? 250 : 110}
-                      height={48}
-                      placeholder="08:01"
-                    />
-
-                    <FieldHolder>
-                      <AmPmButton
-                        fSize={14}
-                        fFamily={theme.FONT_FAMILY.NunitoBold700}
-                        color={
-                          isAmPm === "Am"
-                            ? theme.COLORS.base_gray_100
-                            : theme.COLORS.base_gray_400
-                        }
-                        title="Am"
-                        onPress={handleAmPm.bind(this, "Am")}
+              <FieldWrapper direction="row" justify="space-between" >
+                  { showDate ? 
+                      <DateTimePicker 
+                        value={date}
+                        testID="dateTimePicker" 
+                        mode={mode}
+                        display="default"
+                        onChange={onChange}
+                        is24HourSource="locale"
+                      
                       />
+                      :
+                      <FieldHolder>
+                        <Label>Date</Label>
+                        <FormInput
+                          width={width > 750 ? 315 : 153}
+                          height={48}
+                          placeholder="mm/dd/yy"
+                          value={dateString}
+                          onChangeText={handleDate}                 
+                          onFocus={handleFocus.bind(this, 'date')}
+                          onBlur={handleBlur}
+                          />
+                  
+                      </FieldHolder>
+                      }
 
-                      <AmPmButton
-                        fSize={14}
-                        fFamily={theme.FONT_FAMILY.NunitoBold700}
-                        color={
-                          isAmPm === "Pm"
-                            ? theme.COLORS.base_gray_100
-                            : theme.COLORS.base_gray_400
-                        }
-                        title="Pm"
-                        onPress={handleAmPm.bind(this, "Pm")}
+                  <FieldHolder>
+                    <Label>Hour</Label>                 
+                      
+                        {showTime ?
+                        <DateTimePicker 
+                        value={date}
+                        testID="dateTimePicker" 
+                        mode={mode}
+                        display="default"
+                        onChange={onChange}
+                        is24HourSource="locale"
+                      
                       />
-                    </FieldHolder>
-                  </FieldWrapper>
+                      :
+                      
+                    
+                        <FormInput
+                          width={width > 750 ? 315 : 153}
+                          height={48}
+                          placeholder="hh:mm"
+                          value={time}
+                          onChangeText={handleTime}
+                          onFocus={handleFocus.bind(this, 'time')}
+                          onBlur={handleBlur}
+                        />
+                    }
+
+                
                 </FieldHolder>
               </FieldWrapper>
+
+
+
               <FieldWrapper direction="row" justify="space-between">
                 <FieldHolder>
                   <Label>Is this meal within your Diet ?</Label>
-                  <FieldWrapper direction="row" justify="space-between" gap={8}>
+                  <FieldWrapper direction="row" justify="space-between" gap={6}>
                         <FormButton 
                           width={width > 750 ? 315 : 160}
                           backgroundColor={activeButtonContent === "Yes" ? theme.COLORS.brand_green_light : theme.COLORS.base_gray_600}
