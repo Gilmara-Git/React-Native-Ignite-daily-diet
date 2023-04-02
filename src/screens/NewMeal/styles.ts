@@ -49,7 +49,9 @@ export const FieldWrapper = styled.View<FieldWrapperStyleProps>`
  
 `
 
-export const FieldHolder = styled.View``;
+export const FieldHolder = styled.View`
+
+`;
 
 export const Label = styled.Text`
   ${({theme})=> css`
@@ -58,12 +60,12 @@ export const Label = styled.Text`
   color: ${theme.COLORS.base_gray_200};
   
   `}
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 `;
 export const BottomContainer = styled.View`
   flex: 1;
   background-color: ${({theme})=>theme.COLORS.base_gray_700};
   justify-content: flex-end;
   transform: translateY(-15px);
-
+ 
 `

@@ -10,7 +10,6 @@ import {
 } from "./styles";
 import { ColoredHeader } from "@components/ColoredHeader";
 import { MainButton } from "@components/MainButton";
-import { AmPmButton } from "@components/AmPmButton";
 import { FormButton } from "@components/FormButton";
 import { FormInput } from "@components/FormInput";
 import { useTheme } from "styled-components/native";
@@ -26,19 +25,61 @@ import {
   ScrollView
 } from "react-native";
 
+
+
+import { getMeals } from "@storage/meals/getMeals";
+
+import DateTimePicker from "@react-native-community/datetimepicker";
+import  { getUsDate, getUsTime } from '@utils/dateTimePickerHelper';
+
 type NewMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "edit_meal">;
 };
 
 export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
-  const [isAmPm, setIsAmPm] = useState("Am");
-  const [description, setDescription] = useState("");
-  const [mealName, setMealName] = useState("");
-  const [ activeButtonContent, setActiveButtonContent ] = useState("");
-
+  const [activeButtonContent, setActiveButtonContent] = useState("");
   const theme = useTheme();
   const { width } = useWindowDimensions();
 
+  const [mealName, setMealName] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState<object>(new Date());
+
+  const [time, setTime] = useState("");
+  const [dateString, setDateString] = useState("");
+  const [mode, setMode] = useState("date"); // allows to switch to date and time
+  const [showTime, setShowTime] = useState(false);
+  const [showDate, setShowDate] = useState(false);
+
+  const showMode = (currentMode: string) => {
+    setMode(currentMode);
+    if(currentMode === "date"){
+      setShowDate(true);
+      setShowTime(false)
+    }else {
+      setShowDate(false);
+      setShowTime(true)
+    } 
+
+  };
+  const onChange = (event: object, selectedDate: object) => {   
+    const currentDate = selectedDate || date;
+    // setDate(currentDate);
+    let tempDate = new Date(String(currentDate));
+    if (mode === "date") {
+      setShowDate(Platform.OS === "ios");
+      const usDate = getUsDate(tempDate);     
+      setDateString(usDate);
+      setShowDate(false);
+    } else {
+     
+      setShowTime(Platform.OS === "ios");
+      const formattedTime  = getUsTime(tempDate);    
+      setTime(formattedTime);
+      setShowTime(false);
+    }
+  };
+  
   const handleReturnHome = () => {
     navigation.navigate('home');
   };
@@ -47,9 +88,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     setDescription(value);
   };
 
-  const handleAmPm = (value: string) => {
-    setIsAmPm(value);
-  };
+
 
   const handleActiveButton =( value: string)=>{
     setActiveButtonContent(value);
@@ -63,7 +102,15 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     // take client back to the home screen
     navigation.navigate("home");
   } 
+ 
+  const handleFocus = (value: string) => {
+    showMode(value);
+    
+  };
 
+  const handleBlur = (value: string) => {    
+    value === 'date' ? setShowDate(false) : setShowTime(false);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -116,52 +163,64 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
               </FieldHolder>
 
               <FieldWrapper direction="row" justify="space-between">
-                <FieldHolder>
-                  <Label>Date</Label>
-                  <FormInput
-                    width={width > 750 ? 315 : 153}
-                    height={48}
-                    placeholder="00/00/00"
-                  />
-                </FieldHolder>
-
-                <FieldHolder>
-                  <Label>Hour</Label>
-                  <FieldWrapper direction="row" justify="space-between" gap={4}>
-                    <FormInput
-                      width={width > 750 ? 250 : 110}
-                      height={48}
-                      placeholder="08:01"
-                    />
-
-                    <FieldHolder>
-                      <AmPmButton
-                        fSize={14}
-                        fFamily={theme.FONT_FAMILY.NunitoBold700}
-                        color={
-                          isAmPm === "Am"
-                            ? theme.COLORS.base_gray_100
-                            : theme.COLORS.base_gray_400
-                        }
-                        title="Am"
-                        onPress={handleAmPm.bind(this, "Am")}
-                      />
-
-                      <AmPmButton
-                        fSize={14}
-                        fFamily={theme.FONT_FAMILY.NunitoBold700}
-                        color={
-                          isAmPm === "Pm"
-                            ? theme.COLORS.base_gray_100
-                            : theme.COLORS.base_gray_400
-                        }
-                        title="Pm"
-                        onPress={handleAmPm.bind(this, "Pm")}
+                  {showDate ? (
+                    <FieldHolder style={{ alignItems: 'center', justifyContent: 'center', width: '50%'}}>
+                        <Label>Select the date</Label>
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="mode"
+                        display="default"
+                        onChange ={onChange}
+                        is24HourSource="locale"
                       />
                     </FieldHolder>
-                  </FieldWrapper>
-                </FieldHolder>
-              </FieldWrapper>
+                  ) : (
+                    <FieldHolder>
+                      <Label>Date</Label>
+                      <FormInput
+                        width={width > 750 ? 315 : 153}
+                        height={48}
+                        placeholder="mm/dd/yy"
+                        value={dateString}                      
+                        onFocus={handleFocus.bind(this, "date")}
+                        onBlur={handleBlur.bind(this, "date")}
+                      />
+                    </FieldHolder>
+                  )}
+
+
+                    {showTime ? (
+                      
+                      <FieldHolder style={{ alignItems: 'center', justifyContent: 'center',  width: '50%'}}>
+                        <Label>Select the time</Label>
+                        <DateTimePicker
+                          value={date}
+                          testID="dateTimePicker"
+                          mode={mode}
+                          display="default"
+                          onChange={onChange}
+                          is24HourSource="locale"
+                          />
+                      </FieldHolder>
+                    ) : (
+                        <FieldHolder>
+                          <Label>Hour</Label>
+                        <FormInput
+                          width={width > 750 ? 315 : 153}
+                          height={48}
+                          placeholder="hh:mm"
+                          value={time}                        
+                          onFocus={handleFocus.bind(this, "time")}
+                          onBlur={handleBlur.bind(this, "time")}
+                        />
+                      </FieldHolder>
+                    )}
+                
+                </FieldWrapper>
+
+
+
               <FieldWrapper direction="row" justify="space-between">
                 <FieldHolder>
                   <Label>Is this meal within your Diet ?</Label>
