@@ -39,8 +39,8 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
 
   const handleDeleteMeal = ()=>{
     Alert.alert("Delete Meal ?", "Do you want to remove this meal", [
-      { text: 'No', style: "cancel"},
-      { text: 'Yes', style: "destructive", onPress:()=>deleteUpdateMeal()}, 
+      { text: 'Cancel', style: "cancel"},
+      { text: 'Remove', style: "destructive", onPress:()=>deleteUpdateMeal()}, 
     ])
   };
   
