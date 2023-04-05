@@ -29,7 +29,8 @@ import {
 
 import { getMeals } from "@storage/meals/getMeals";
 
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { DateTimePickerMode } from '@screens/NewMeal';
 import  { getUsDate, getUsTime } from '@utils/dateTimePickerHelper';
 
 type NewMealNavigationProps = {
@@ -43,15 +44,15 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
 
   const [mealName, setMealName] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState<object>(new Date());
+  const [date, setDate] = useState<Date>(new Date());
 
   const [time, setTime] = useState("");
   const [dateString, setDateString] = useState("");
-  const [mode, setMode] = useState("date"); // allows to switch to date and time
+  const [mode, setMode] = useState<DateTimePickerMode>("date"); // allows to switch to date and time
   const [showTime, setShowTime] = useState(false);
   const [showDate, setShowDate] = useState(false);
 
-  const showMode = (currentMode: string) => {
+  const showMode = (currentMode: DateTimePickerMode) => {
     setMode(currentMode);
     if(currentMode === "date"){
       setShowDate(true);
@@ -62,7 +63,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     } 
 
   };
-  const onChange = (event: object, selectedDate: object) => {   
+  const onDateOrTimePickerChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {   
     const currentDate = selectedDate || date;
     // setDate(currentDate);
     let tempDate = new Date(String(currentDate));
@@ -103,7 +104,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     navigation.navigate("home");
   } 
  
-  const handleFocus = (value: string) => {
+  const handleFocus = (value: DateTimePickerMode) => {
     showMode(value);
     
   };
@@ -169,10 +170,10 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
                       <DateTimePicker
                         testID="dateTimePicker"
                         value={date}
-                        mode="mode"
+                        mode={mode}
                         display="default"
-                        onChange ={onChange}
-                        is24HourSource="locale"
+                        onChange ={onDateOrTimePickerChange}
+                        is24Hour={true}
                       />
                     </FieldHolder>
                   ) : (
@@ -199,8 +200,8 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
                           testID="dateTimePicker"
                           mode={mode}
                           display="default"
-                          onChange={onChange}
-                          is24HourSource="locale"
+                          onChange={onDateOrTimePickerChange}
+                          is24Hour={true}
                           />
                       </FieldHolder>
                     ) : (
