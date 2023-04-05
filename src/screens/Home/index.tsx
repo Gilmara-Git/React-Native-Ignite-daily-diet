@@ -4,7 +4,7 @@ import {
   Title,
   MealsDetailContainer,
 } from "./styles";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Header } from "@components/Header";
 import { MainButton } from "@components/MainButton";
 import { StatisticBox } from "@components/HomeScreenComponents/StatisticBox";
@@ -15,16 +15,32 @@ import { useWindowDimensions, SectionList } from "react-native";
 import { DATA } from "@utils/mealsData";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RoutesParamList } from "@routes/routesTypes";
+import { getMeals } from '@storage/meals/getMeals';
 
 type HomeNavigationProps  = {
   navigation: NativeStackNavigationProp<RoutesParamList, 'home'>
 }
 
+type MealsList ={
+  date: string;
+  data: Array<{
+    name: string;
+    time: string;
+    description: string;
+    withinDiet: string;  
+    id: string;
+  }>
+}[]
+
 export const Home = ({navigation} : HomeNavigationProps) => {
+
+ 
   const [percentage, setPercentage] = useState(90.86);
+  const [ mealsList, setMealsList ] = useState();
   const { width } = useWindowDimensions();
   const theme = useTheme();
   const description =  'of meals within diet plan';
+  // console.log(mealsList, 'sou a mealsList')
 
 
   const handleStatisticsNavigation = ()=>{
@@ -40,6 +56,20 @@ export const Home = ({navigation} : HomeNavigationProps) => {
   const handleNewMealNavigation = () => {  
     navigation.navigate("new_meal");
   };
+
+  const getUpdatedMeals = async()=>{
+   const meals = await getMeals();
+  //  console.log(meals, 'linha6222222')
+
+    // if(meals){
+    //   setMealsList(meals)
+    // }
+    // setMealsList(meals)
+  }
+
+  useEffect(()=>{
+    getUpdatedMeals();
+  }, []);
 
   return (
     <Container>

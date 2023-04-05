@@ -1,4 +1,5 @@
 import { useState } from "react";
+import uuid from 'react-native-uuid';
 import { ColoredHeader } from "@components/ColoredHeader";
 import { MainButton } from "@components/MainButton";
 import { FormButton } from "@components/FormButton";
@@ -27,15 +28,17 @@ import {
   Text
 } from "react-native";
 
-import { getMeals } from "@storage/meals/getMeals";
+import { getMeals } from "@storage/meals/getMeals"; 
+import { createMeal } from '@storage/meals/createMeal';
 
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker , { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import  { getUsDate, getUsTime } from '@utils/dateTimePickerHelper';
 
 type NewMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "new_meal">;
 };
 
+export type DateTimePickerMode = 'date'| 'time';
 
 
 export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
@@ -46,15 +49,15 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
 
   const [mealName, setMealName] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState<object>(new Date());
+  const [date, setDate] = useState<Date>(new Date());
 
   const [time, setTime] = useState("");
   const [dateString, setDateString] = useState("");
-  const [mode, setMode] = useState("date"); // allows to switch to date and time
+  const [mode, setMode] = useState<DateTimePickerMode>("date"); // allows to switch to date and time
   const [showTime, setShowTime] = useState(false);
   const [showDate, setShowDate] = useState(false);
   
-  const showMode = (currentMode: string) => {
+  const showMode = (currentMode: DateTimePickerMode) => {
     setMode(currentMode);
     if(currentMode === "date"){
       setShowDate(true);
@@ -66,7 +69,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
 
   };
 
-  const onChange = (event: object, selectedDate: object) => {   
+  const onDateOrTimePickerChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {   
     const currentDate = selectedDate || date;
    
     let tempDate = new Date(String(currentDate));
@@ -104,7 +107,6 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
     if (!activeButtonContent) {
       return Alert.alert("Meal within your diet?", "Please check Yes or No.");
     }
-    const mealsList = await getMeals();
 
     if (!mealName.trim()) {
       return Alert.alert("Please fill out your Meal name.");
@@ -114,27 +116,31 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
       return Alert.alert("Please describe your Meal.");
     }
 
-    //  if(!date.trim()){
-    //   return Alert.alert('Please pick a date.');
-    //  }
+     if(!dateString.trim()){
+      return Alert.alert('Please pick a date.');
+     }
 
     if (!time.trim()) {
       return Alert.alert("Please pick a time.");
     }
     const newMeal = {
-      date: "02.03.23",
+      date: dateString,
       data: [
-        { name: mealName, time: "", description: description, withinDiet: "" },
+        {  id: uuid.v4(), name: mealName, time: time, description: description, withinDiet: activeButtonContent },
       ],
     };
-    console.log(newMeal, "linha66");
+    console.log(newMeal)
+    
+    await createMeal(newMeal);
+    // const mealsList = await getMeals();
+    // console.log(mealsList, 'linha137' )
 
     // get all data, mount the object (Stringify it ) and save in ASyncStorage
     //save a new Meal on the AsyncStorage
     navigation.navigate("feedback", { activeButtonContent });
   };
 
-  const handleFocus = (value: string) => {
+  const handleFocus = (value: DateTimePickerMode) => {
     showMode(value);
     
   };
@@ -204,8 +210,8 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                         testID="dateTimePicker"
                         mode={mode}
                         display="default"
-                        onChange ={onChange}
-                        is24HourSource="locale"
+                        onChange ={onDateOrTimePickerChange}
+                        is24Hour={true}
                       />
                     </FieldHolder>
                   ) : (
@@ -232,8 +238,8 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                           testID="dateTimePicker"
                           mode={mode}
                           display="default"
-                          onChange={onChange}
-                          is24HourSource="locale"
+                          onChange={onDateOrTimePickerChange}
+                          is24Hour={true}
                           />
                       </FieldHolder>
                     ) : (
