@@ -4,44 +4,43 @@ import {
   Title,
   MealsDetailContainer,
 } from "./styles";
-import { useState , useEffect } from "react";
+import { useTheme } from "styled-components/native";
+
+import { useState , useCallback } from "react";
+import { useWindowDimensions, SectionList } from "react-native";
+
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useFocusEffect } from "@react-navigation/native";
+import { RoutesParamList } from "@routes/routesTypes";
+
 import { Header } from "@components/Header";
 import { MainButton } from "@components/MainButton";
 import { StatisticBox } from "@components/HomeScreenComponents/StatisticBox";
 import { SectionListItem } from "@components/SectionListComponents/SectionListItem";
 import { SectionListHeader } from "@components/SectionListComponents/SectionListHeader";
-import { useTheme } from "styled-components/native";
-import { useWindowDimensions, SectionList } from "react-native";
-import { DATA } from "@utils/mealsData";
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RoutesParamList } from "@routes/routesTypes";
-import { getMeals } from '@storage/meals/getMeals';
+
+import { getAllMeals } from '@storage/meals/getAllMeals';
+import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+import  groupBy from 'lodash/groupBy';
 
 type HomeNavigationProps  = {
   navigation: NativeStackNavigationProp<RoutesParamList, 'home'>
 }
 
-type MealsList ={
+type MealsListProps ={
   date: string;
-  data: Array<{
-    name: string;
-    time: string;
-    description: string;
-    withinDiet: string;  
-    id: string;
-  }>
-}[]
+  data: MealStorageDTO[];
+  }
+
 
 export const Home = ({navigation} : HomeNavigationProps) => {
 
  
-  const [percentage, setPercentage] = useState(90.86);
-  const [ mealsList, setMealsList ] = useState();
+  const [percentage, setPercentage] = useState(40.86);
+  const [ mealsList, setMealsList ] = useState<MealsListProps[]>([]);
   const { width } = useWindowDimensions();
   const theme = useTheme();
   const description =  'of meals within diet plan';
-  // console.log(mealsList, 'sou a mealsList')
-
 
   const handleStatisticsNavigation = ()=>{
     navigation.navigate('statistics', {  
@@ -58,18 +57,38 @@ export const Home = ({navigation} : HomeNavigationProps) => {
   };
 
   const getUpdatedMeals = async()=>{
-   const meals = await getMeals();
-  //  console.log(meals, 'linha6222222')
 
-    // if(meals){
-    //   setMealsList(meals)
-    // }
-    // setMealsList(meals)
+    try{
+
+      setMealsList([]);
+      const mealsStored = await getAllMeals();
+
+      const groupList = Object.values(
+        groupBy(mealsStored, (mealsList)=>{       
+          return mealsList.date;
+        })
+        
+        )
+    
+        groupList.map(list =>{
+          let meal = {
+            date: list[0].date,
+            data: [...list]
+          }
+
+          setMealsList(prevState => [...prevState, meal])
+        
+        })
+  
+
+    }catch(error){
+      throw error;
+    }
+   
   }
-
-  useEffect(()=>{
-    getUpdatedMeals();
-  }, []);
+  useFocusEffect(useCallback(()=>{
+        getUpdatedMeals();
+  }, []))
 
   return (
     <Container>
@@ -104,14 +123,14 @@ export const Home = ({navigation} : HomeNavigationProps) => {
             iconColor={theme.COLORS.base_white} />
         <SectionList
           showsVerticalScrollIndicator={false}
-          sections={DATA}
-          keyExtractor={(item, index) => item.name + index}
+          sections={mealsList}
+          keyExtractor={(item, index) => item.mealName + index}
           renderItem={({ item }) => (
             <SectionListItem
               widthDimensions={width}
               time={item.time}
-              mealName={item.name}
-              indicatorColor={item.colorIndicator}
+              mealName={item.mealName}
+              indicatorColor={item.withinDiet}
             />
           )}
           renderSectionHeader={({ section: { date } }) => (

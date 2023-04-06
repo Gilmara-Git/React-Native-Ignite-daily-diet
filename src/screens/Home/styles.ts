@@ -15,6 +15,7 @@ export const MealsTitleContainer = styled.View`
     align-items: center;
     margin-top: 40px;
     margin-bottom: 10px;
+   
 `
 
 export const Title = styled.Text`
@@ -29,4 +30,5 @@ export const Title = styled.Text`
 `;
 export const MealsDetailContainer = styled.View`
     align-items: center;
+    flex: 1;
 `
