@@ -10,7 +10,7 @@ import OutsideDietImage from '@assets/illustration_outsideDiet.svg';
 
 
 export type DietParams = {   
-    activeButtonContent: string;
+    activeButton: boolean;
     
 }
 
@@ -25,16 +25,16 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     const [ boldDescription, setBoldDescription ] = useState("");
     const theme = useTheme();
     const  { params } = useRoute();
-    const {activeButtonContent } = params as DietParams;
+    const {activeButton } = params as DietParams;
 
 
 
     const handleBackHome = ()=>{
-        navigation.navigate("show_meal", { activeButtonContent })
+        navigation.navigate("show_meal", {  activeButton })
     }
 
     useEffect(()=>{
-        if(activeButtonContent === 'Yes'){
+        if(activeButton){
             setTitle('Keep it up!');
             setInitialDescription('You are ');
             setBoldDescription('keeping your diet. ');
@@ -49,14 +49,14 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
     }, [])
     return (
         <Container>
-            <Title textColor={activeButtonContent === 'Yes' ? theme.COLORS.brand_green_dark :theme.COLORS.brand_red_dark}>{title}</Title>
+            <Title textColor={activeButton ? theme.COLORS.brand_green_dark :theme.COLORS.brand_red_dark}>{title}</Title>
             <Description textColor={theme.COLORS.base_gray_200}>
                 {initialDescription}
                 <BoldDescription>{boldDescription}</BoldDescription>
                 {endDescription}
             </Description>
 
-            { activeButtonContent === 'Yes' ? 
+            { activeButton ? 
                 <WithinDietImage style={{marginBottom: 40}}/>
                 :
                 <OutsideDietImage style={{marginBottom: 40}}/>
