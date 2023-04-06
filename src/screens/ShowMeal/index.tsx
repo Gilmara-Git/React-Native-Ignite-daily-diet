@@ -27,7 +27,7 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const { params }  = useRoute();
-  const { activeButtonContent } = params as DietParams;
+  const { activeButton } = params as DietParams;
   
 
   const handleReturnHome = () => {
@@ -52,7 +52,7 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
         <Container>
           <ColoredHeader
             height={132}
-            backgroundColor={activeButtonContent === 'Yes' ? theme.COLORS.brand_green_light : theme.COLORS.brand_red_light}
+            backgroundColor={activeButton ? theme.COLORS.brand_green_light : theme.COLORS.brand_red_light}
             fontSize={theme.FONT_SIZE.MD}
             arrowColor={theme.COLORS.base_gray_200}
             title="Meal"
@@ -69,9 +69,9 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
               <DateTimeDescription>03/28/2023 at 07:00 Pm</DateTimeDescription>
               
               <LabelContainer>
-                <Dot fill={activeButtonContent === 'Yes'? theme.COLORS.brand_green_dark : theme.COLORS.brand_red_dark}/>
+                <Dot fill={activeButton ? theme.COLORS.brand_green_dark : theme.COLORS.brand_red_dark}/>
                 <LabelText>
-                  { activeButtonContent === 'Yes'? 'Within Diet' : 'Outside Diet' }
+                  { activeButton ? 'Within Diet' : 'Outside Diet' }
                 </LabelText>
               </LabelContainer>
             

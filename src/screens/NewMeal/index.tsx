@@ -1,5 +1,7 @@
+import { AppError } from '@utils/AppError';
 import { useState } from "react";
 import uuid from 'react-native-uuid';
+
 import { ColoredHeader } from "@components/ColoredHeader";
 import { MainButton } from "@components/MainButton";
 import { FormButton } from "@components/FormButton";
@@ -25,14 +27,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text
 } from "react-native";
 
-import { getMeals } from "@storage/meals/getMeals"; 
 import { createMeal } from '@storage/meals/createMeal';
-
 import DateTimePicker , { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import  { getUsDate, getUsTime } from '@utils/dateTimePickerHelper';
+
 
 type NewMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "new_meal">;
@@ -100,7 +100,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
   };
  
   const handleActiveButton = (value: string) => {
-    setActiveButtonContent(value);
+    setActiveButtonContent(value );
   };
 
   const handledNewMeal = async () => {
@@ -123,22 +123,32 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
     if (!time.trim()) {
       return Alert.alert("Please pick a time.");
     }
-    const newMeal = {
-      date: dateString,
-      data: [
-        {  id: uuid.v4(), name: mealName, time: time, description: description, withinDiet: activeButtonContent },
-      ],
-    };
-    console.log(newMeal)
+    const newMeal  = {
+      mealName, 
+      description, 
+      date: dateString,      
+      time, 
+      id: String(uuid.v4()), 
+      withinDiet: activeButtonContent === 'Yes'? true: false ,
     
-    await createMeal(newMeal);
-    // const mealsList = await getMeals();
-    // console.log(mealsList, 'linha137' )
+    };
+  
+    try {
+      await createMeal(newMeal); 
 
-    // get all data, mount the object (Stringify it ) and save in ASyncStorage
-    //save a new Meal on the AsyncStorage
-    navigation.navigate("feedback", { activeButtonContent });
-  };
+    }catch(error){
+      if(error instanceof AppError){
+        Alert.alert('Failed, duplicated Meal', error.message)
+      }
+        
+        console.log(error)
+      
+    }
+    
+
+    navigation.navigate("feedback", { activeButton: activeButtonContent === 'Yes' ? true : false  });
+  }; 
+
 
   const handleFocus = (value: DateTimePickerMode) => {
     showMode(value);
@@ -269,15 +279,15 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                       <FormButton
                         width={width > 750 ? 315 : 160}
                         backgroundColor={
-                          activeButtonContent === "Yes"
+                          activeButtonContent === 'Yes'
                             ? theme.COLORS.brand_green_light
                             : theme.COLORS.base_gray_600
                         }
                         title="Yes"
                         dotColor={theme.COLORS.brand_green_dark}
-                        border={activeButtonContent === "Yes" ? 1 : 0}
+                        border={activeButtonContent === 'Yes' ? 1 : 0}
                         borderColor={
-                          activeButtonContent === "Yes"
+                          activeButtonContent === 'Yes'
                             ? theme.COLORS.brand_green_dark
                             : ""
                         }
@@ -287,15 +297,15 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                       <FormButton
                         width={width > 750 ? 315 : 160}
                         backgroundColor={
-                          activeButtonContent === "No"
+                          activeButtonContent === 'No'
                             ? theme.COLORS.brand_red_light
                             : theme.COLORS.base_gray_600
                         }
                         title="No"
                         dotColor={theme.COLORS.brand_red_dark}
-                        border={activeButtonContent === "No" ? 1 : 0}
+                        border={activeButtonContent === 'No' ? 1 : 0}
                         borderColor={
-                          activeButtonContent === "No"
+                          activeButtonContent === 'No'
                             ? theme.COLORS.brand_red_dark
                             : theme.COLORS.base_gray_600
                         }
