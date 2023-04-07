@@ -1,7 +1,8 @@
 import { Container, Time, MealName, IndicatorDot,Separator } from './styles';
+import { TouchableOpacityProps } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
-type SectionListItem ={
+type SectionListItem = TouchableOpacityProps &{
     time: string;
     mealName : string; 
     widthDimensions: number;
@@ -9,10 +10,13 @@ type SectionListItem ={
 }
 
 
-export const SectionListItem = ({ widthDimensions, time, mealName, indicatorColor }:SectionListItem)=>{
+export const SectionListItem = ({ widthDimensions, time, mealName, indicatorColor, ...rest }:SectionListItem)=>{
     const theme = useTheme()
 ;    return (
-        <Container widthDimensions={widthDimensions}>
+        <Container 
+            widthDimensions={widthDimensions}
+            {...rest}
+            >
             <Time>{time}</Time>
             <Separator />
             <MealName>{mealName}</MealName>

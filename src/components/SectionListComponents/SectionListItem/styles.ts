@@ -1,4 +1,5 @@
 import styled,  {css} from 'styled-components/native';
+import { TouchableOpacity } from 'react-native';
 
 export type IndicatorListStyleProps ={
     indicatorColor: string;   
@@ -9,7 +10,7 @@ type ContainerWidthProps ={
 }
 
 
-export const Container = styled.View<ContainerWidthProps>`
+export const Container = styled(TouchableOpacity)<ContainerWidthProps>`
     width: ${({widthDimensions })=> widthDimensions > 750 ? 650 :327 }px;
     height: 49px;
     border-radius: 6px;
