@@ -21,26 +21,26 @@ import { SectionListHeader } from "@components/SectionListComponents/SectionList
 
 import { getAllMeals } from '@storage/meals/getAllMeals';
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+import { calculatePercentage } from '@utils/calculatePercentage';
 import  groupBy from 'lodash/groupBy';
 
 type HomeNavigationProps  = {
   navigation: NativeStackNavigationProp<RoutesParamList, 'home'>
 }
 
-type MealsListProps ={
+export type MealsListProps ={
   date: string;
   data: MealStorageDTO[];
   }
 
 
 export const Home = ({navigation} : HomeNavigationProps) => {
-
- 
-  const [percentage, setPercentage] = useState(40.86);
+  const [percentage, setPercentage] = useState('');
   const [ mealsList, setMealsList ] = useState<MealsListProps[]>([]);
   const { width } = useWindowDimensions();
   const theme = useTheme();
   const description =  'of meals within diet plan';
+
 
   const handleStatisticsNavigation = ()=>{
     navigation.navigate('statistics', {  
@@ -48,7 +48,17 @@ export const Home = ({navigation} : HomeNavigationProps) => {
       subtitle: `${description}`, 
       title: `${percentage}%` ,
       arrowColor: Number(`${percentage}`) > 50 ? `${theme.COLORS.brand_green_dark}` : `${theme.COLORS.brand_red_dark}`,
-      percentage: Number(`${percentage}`)
+      percentage: Number(`${percentage}`),
+      
+    });
+  }
+
+  const handleShowMealNavigation = ( mealName: string, description: string, date: string, time: string, id: string)=>{
+
+    navigation.navigate('show_meal', { 
+      percentage: Number(`${percentage}`), 
+      id 
+      
     });
   }
 
@@ -62,26 +72,29 @@ export const Home = ({navigation} : HomeNavigationProps) => {
 
       setMealsList([]);
       const mealsStored = await getAllMeals();
+      const currentPercentage = calculatePercentage(mealsStored);    
+      setPercentage(currentPercentage);
 
-      const groupList = Object.values(
-        groupBy(mealsStored, (mealsList)=>{       
-          return mealsList.date;
+      const groupedByDate = Object.values(
+        groupBy(mealsStored, (mealsList)=>{ 
+             return mealsList.date;
         })
         
         )
-    
-        groupList.map(list =>{
+   
+
+        groupedByDate.map(list =>{
           let meal = {
             date: list[0].date,
             data: [...list]
           }
-
+         
           setMealsList(prevState => [...prevState, meal])
         
-        })
+        });
   
-
     }catch(error){
+      console.log(error)
       throw error;
     }
    
@@ -98,13 +111,13 @@ export const Home = ({navigation} : HomeNavigationProps) => {
         textInfo={description}
         percentage={percentage}
         dynamicBackground={
-          percentage > 50
+          Number(percentage) > 50
             ? theme.COLORS.brand_green_light
             : theme.COLORS.brand_red_light
         }
         widthDimensions={width}
         arrowColor={
-          percentage > 50
+          Number(percentage) > 50
             ? theme.COLORS.brand_green_dark
             : theme.COLORS.brand_red_dark
         }
@@ -127,10 +140,12 @@ export const Home = ({navigation} : HomeNavigationProps) => {
           keyExtractor={(item, index) => item.mealName + index}
           renderItem={({ item }) => (
             <SectionListItem
+              activeOpacity={0.5}
               widthDimensions={width}
               time={item.time}
               mealName={item.mealName}
               indicatorColor={item.withinDiet}
+              onPress={()=>handleShowMealNavigation(item.mealName, item.description, item.date, item.time, item.id)}
             />
           )}
           renderSectionHeader={({ section: { date } }) => (

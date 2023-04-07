@@ -16,25 +16,42 @@ import { useTheme } from "styled-components/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RoutesParamList } from "@routes/routesTypes";
 import { useRoute } from '@react-navigation/native';
-import { DietParams } from "@screens/Feedback";
 import {  useWindowDimensions, Alert } from "react-native";
+import { useCallback } from 'react';
+import { useFocusEffect } from "@react-navigation/native";
+import { getMealById } from '@storage/meals/getMealById';
+import { useState } from 'react';
+
 
 type ShowMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "show_meal">;
 };
 
+type ShowMealType = {
+  percentage: number;
+  id:string;
+}
 export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
+  const [ mealName, setMealName ] = useState('');
+  const [ description, setDescription ] = useState('');
+  const [ dateTime, setDateTime ] = useState('');
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const { params }  = useRoute();
-  const { activeButton } = params as DietParams;
+  const { percentage , id} = params as ShowMealType;
+
+
   
 
   const handleReturnHome = () => {
     navigation.navigate('home');
   };
   const handleEditMeal = ()=>{
-    navigation.navigate('edit_meal');
+    navigation.navigate('edit_meal', { 
+      percentage, 
+      id 
+      
+    });
   };
 
   const handleDeleteMeal = ()=>{
@@ -47,12 +64,25 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
   const deleteUpdateMeal = ()=>{
     console.log('I was called')
   };
+
+  const fetchMeal = async()=>{
+  const meal =  await getMealById(id);
+  setMealName(meal[0].mealName);
+  setDescription(meal[0].description);
+  setDateTime(meal[0].date + '   ' + meal[0].time)
+
+  }
+ 
+  useFocusEffect(useCallback(()=>{
+    fetchMeal();
+  }, []));
+
   return (
  
         <Container>
           <ColoredHeader
             height={132}
-            backgroundColor={activeButton ? theme.COLORS.brand_green_light : theme.COLORS.brand_red_light}
+            backgroundColor={percentage > 50 ? theme.COLORS.brand_green_light : theme.COLORS.brand_red_light}
             fontSize={theme.FONT_SIZE.MD}
             arrowColor={theme.COLORS.base_gray_200}
             title="Meal"
@@ -63,15 +93,15 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
         
           <ContentContainer>
             
-              <MealTitle>Meal Name which will be dynamic</MealTitle>
-              <MealDescription>Meal description </MealDescription>
+              <MealTitle>{mealName}</MealTitle>
+              <MealDescription>{description}</MealDescription>
               <DateTimeLabel>Date and time</DateTimeLabel>
-              <DateTimeDescription>03/28/2023 at 07:00 Pm</DateTimeDescription>
+              <DateTimeDescription>{dateTime}</DateTimeDescription>
               
               <LabelContainer>
-                <Dot fill={activeButton ? theme.COLORS.brand_green_dark : theme.COLORS.brand_red_dark}/>
+                <Dot fill={percentage > 50 ? theme.COLORS.brand_green_dark : theme.COLORS.brand_red_dark}/>
                 <LabelText>
-                  { activeButton ? 'Within Diet' : 'Outside Diet' }
+                  { percentage > 50  ? 'Within Diet' : 'Outside Diet' }
                 </LabelText>
               </LabelContainer>
             
