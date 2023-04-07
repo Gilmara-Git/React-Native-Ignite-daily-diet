@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Container,
   InnerContainer,
@@ -14,6 +14,7 @@ import { FormButton } from "@components/FormButton";
 import { FormInput } from "@components/FormInput";
 import { useTheme } from "styled-components/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useRoute , useFocusEffect} from '@react-navigation/native';
 import { RoutesParamList } from "@routes/routesTypes";
 import {
   useWindowDimensions, 
@@ -26,40 +27,46 @@ import {
 } from "react-native";
 
 
-
-import { getMeals } from "@storage/meals/getMeals";
-
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { DateTimePickerMode } from '@screens/NewMeal';
 import  { getUsDate, getUsTime } from '@utils/dateTimePickerHelper';
+import { getMealById } from '@storage/meals/getMealById';
+import  { editMeal } from '@storage/meals/editMeal';
 
 type NewMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "edit_meal">;
 };
 
+type EditMealParams = {
+  id: string;
+  percentage: string;
+}
+
 export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
   const [activeButtonContent, setActiveButtonContent] = useState("");
   const theme = useTheme();
   const { width } = useWindowDimensions();
-
   const [mealName, setMealName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState<Date>(new Date());
-
+  
   const [time, setTime] = useState("");
   const [dateString, setDateString] = useState("");
   const [mode, setMode] = useState<DateTimePickerMode>("date"); // allows to switch to date and time
-  const [showTime, setShowTime] = useState(false);
-  const [showDate, setShowDate] = useState(false);
+  const [showPickerTime, setShowPickerTime] = useState(false);
+  const [showPickerDate, setShowPickerDate] = useState(false);
+  const { params } =  useRoute();
+  const { id, percentage } = params as EditMealParams;
+
 
   const showMode = (currentMode: DateTimePickerMode) => {
     setMode(currentMode);
     if(currentMode === "date"){
-      setShowDate(true);
-      setShowTime(false)
+      setShowPickerDate(true);
+      setShowPickerTime(false)
     }else {
-      setShowDate(false);
-      setShowTime(true)
+      setShowPickerDate(false);
+      setShowPickerTime(true)
     } 
 
   };
@@ -68,21 +75,25 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     // setDate(currentDate);
     let tempDate = new Date(String(currentDate));
     if (mode === "date") {
-      setShowDate(Platform.OS === "ios");
+      setShowPickerDate(Platform.OS === "ios");
       const usDate = getUsDate(tempDate);     
       setDateString(usDate);
-      setShowDate(false);
+      setShowPickerDate(false);
     } else {
      
-      setShowTime(Platform.OS === "ios");
+      setShowPickerTime(Platform.OS === "ios");
       const formattedTime  = getUsTime(tempDate);    
       setTime(formattedTime);
-      setShowTime(false);
+      setShowPickerTime(false);
     }
   };
   
   const handleReturnHome = () => {
     navigation.navigate('home');
+  };
+
+  const handleMealName = (value: string) => {
+    setMealName(value);
   };
 
   const handleDescription = (value: string) => {
@@ -95,13 +106,20 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
     setActiveButtonContent(value);
   };
   
-  const handledEditMeal = ()=>{
-    if(!activeButtonContent){
-     return Alert.alert('Meal within your diet?', 'Please check Yes or No.')
-    }
-    // get all the data, mount the object and save it on the AsyncStorage
-    // take client back to the home screen
-    navigation.navigate("home");
+  const handledEditMeal = async ()=>{
+    const updatedMeal = {
+      id: id,
+      mealName,
+      description,
+      date: dateString,
+      time,
+      withinDiet: activeButtonContent === 'Yes' ? true : false
+
+    };
+
+    await editMeal(updatedMeal);
+
+    navigation.navigate("show_meal", { id: id, percentage: Number(`${percentage}`) });
   } 
  
   const handleFocus = (value: DateTimePickerMode) => {
@@ -110,8 +128,22 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
   };
 
   const handleBlur = (value: string) => {    
-    value === 'date' ? setShowDate(false) : setShowTime(false);
+    value === 'date' ? setShowPickerDate(false) : setShowPickerTime(false);
   };
+
+  const fetchMeal = async()=>{
+    const meal =  await getMealById(id);  
+    setMealName(meal[0].mealName);
+    setDescription(meal[0].description);
+    setDateString(meal[0].date);
+    setTime(meal[0].time);
+    setActiveButtonContent(meal[0].withinDiet === true ? 'Yes': 'No')
+    }
+
+  useFocusEffect(useCallback(()=>{
+    fetchMeal();
+
+  }, []))
 
   return (
     <KeyboardAvoidingView
@@ -141,6 +173,9 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
                     width={width > 750 ? 650 : 327}
                     height={48}
                     placeholder="Meal name"
+                    value={mealName}
+                    onChangeText={handleMealName}
+                    
                   />
                 </FieldWrapper>
               </FieldHolder>
@@ -164,7 +199,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
               </FieldHolder>
 
               <FieldWrapper direction="row" justify="space-between">
-                  {showDate ? (
+                  {showPickerDate ? (
                     <FieldHolder style={{ alignItems: 'center', justifyContent: 'center', width: '50%'}}>
                         <Label>Select the date</Label>
                       <DateTimePicker
@@ -191,7 +226,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
                   )}
 
 
-                    {showTime ? (
+                    {showPickerTime ? (
                       
                       <FieldHolder style={{ alignItems: 'center', justifyContent: 'center',  width: '50%'}}>
                         <Label>Select the time</Label>

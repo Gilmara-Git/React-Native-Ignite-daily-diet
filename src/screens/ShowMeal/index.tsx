@@ -20,6 +20,7 @@ import {  useWindowDimensions, Alert } from "react-native";
 import { useCallback } from 'react';
 import { useFocusEffect } from "@react-navigation/native";
 import { getMealById } from '@storage/meals/getMealById';
+import { deleteMeal } from '@storage/meals/deleteMeal';
 import { useState } from 'react';
 
 
@@ -57,12 +58,15 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
   const handleDeleteMeal = ()=>{
     Alert.alert("Delete Meal ?", "Do you want to remove this meal", [
       { text: 'Cancel', style: "cancel"},
-      { text: 'Remove', style: "destructive", onPress:()=>deleteUpdateMeal()}, 
+      { text: 'Remove', style: "destructive", onPress:()=>deleteUpdateMeals(id)}, 
     ])
   };
   
-  const deleteUpdateMeal = ()=>{
+  const deleteUpdateMeals = async (id: string)=>{
     console.log('I was called')
+    await deleteMeal(id)
+    navigation.navigate('home');
+
   };
 
   const fetchMeal = async()=>{
