@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components/native";
+import { TouchableOpacity } from 'react-native';
 
 export const Container = styled.View`
   align-items: center;
@@ -29,7 +30,7 @@ export const GeneralText = styled.Text`
   margin-bottom: 20px;
 `;
 
-export const RectangleBox = styled.View`
+export const RectangleBox = styled(TouchableOpacity)`
   width: 327px;
   height: 89px;
   border-radius: 8px;
@@ -63,7 +64,7 @@ export const SquaredBoxesContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const SquaredBox = styled.View`
+export const SquaredBox = styled(TouchableOpacity)`
   width: 157px;
   height: 107px;
   border-radius: 8px;

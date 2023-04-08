@@ -57,11 +57,7 @@ export const Home = ({ navigation }: HomeNavigationProps) => {
     });
   };
 
-  const handleShowMealNavigation = (
-    mealName: string,
-    description: string,
-    date: string,
-    time: string,
+  const handleShowMealNavigation = (  
     id: string
   ) => {
     navigation.navigate("show_meal", {
@@ -156,10 +152,6 @@ export const Home = ({ navigation }: HomeNavigationProps) => {
                   indicatorColor={item.withinDiet}
                   onPress={() =>
                     handleShowMealNavigation(
-                      item.mealName,
-                      item.description,
-                      item.date,
-                      item.time,
                       item.id
                     )
                   }

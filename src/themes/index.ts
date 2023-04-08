@@ -15,7 +15,9 @@ export const themes: DefaultTheme = {
         base_gray_400: '#B9BBBC',
         base_gray_500: '#DDDEDF',
         base_gray_600: '#EFF0F0',
-        base_gray_700: '#FAFAFA'
+        base_gray_700: '#FAFAFA',
+        modal_background: 'rgba(0,0,0,0.25)'
+
 
     },
     FONT_FAMILY:{

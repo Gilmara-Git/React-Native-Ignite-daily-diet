@@ -7,6 +7,6 @@ export const Container = styled.View`
 `;
 
 export const Indicator = styled(ActivityIndicator).attrs(({ theme }) => ({
-  color: theme.COLORS.brand_red_dark,
+  color: theme.COLORS.brand_green_dark,
   size: 32,
 }))``;

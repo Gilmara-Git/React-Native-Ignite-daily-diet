@@ -1,4 +1,4 @@
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, TouchableOpacityProps } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { RoutesParamList } from "@routes/routesTypes";
@@ -20,7 +20,7 @@ import {
 } from "./styles";
 
 
-type StatisticsScreenProps = {
+type StatisticsScreenProps =  {
   color: string;
   title: string;
   subtitle: string;
@@ -28,16 +28,17 @@ type StatisticsScreenProps = {
   percentage: number;
 };
 
-type StatisticsNavigationProps = {
+type StatisticsNavigationProps = TouchableOpacityProps &{
   navigation: NativeStackNavigationProp<RoutesParamList, "statistics">;
 };
 
-export const StatisticsScreen = ({ navigation }: StatisticsNavigationProps) => {
+export const StatisticsScreen = ({ navigation, ...rest }: StatisticsNavigationProps) => {
   const [ totalMeals, setTotalMeals ] = useState('');
   const [ mealsWithinDiet, setMealsWithinDiet ] = useState('');
   const [ mealsOutsideDiet, setMealsOutsideDiet ] = useState('');
   const [ bestMealsSequenceInDiet , setBestMealsSequenceInDiet ] = useState('');
-  const { width } = useWindowDimensions();
+  
+ const { width } = useWindowDimensions();
   const { params } = useRoute();
   const theme = useTheme();
   const { color, subtitle, title, arrowColor } =
@@ -114,28 +115,33 @@ export const StatisticsScreen = ({ navigation }: StatisticsNavigationProps) => {
 
       <General style={{ width: width > 750 ? width : 375 }}>
         <GeneralText>General Statistics</GeneralText>
-        <RectangleBox>
+        <RectangleBox        
+        >
           <NumericInfo>{bestMealsSequenceInDiet}</NumericInfo>
           <TextInfo>better sequence of meals within your diet</TextInfo>
         </RectangleBox>
 
-        <RectangleBox>
+        <RectangleBox          
+        >
           <NumericInfo>{totalMeals}</NumericInfo>
           <TextInfo>registered meals</TextInfo>
         </RectangleBox>
 
         <SquaredBoxesContainer>
-          <SquaredBox style={{ backgroundColor: "#E5F0DB" }}>
+          <SquaredBox          
+            style={{ backgroundColor: "#E5F0DB" }}>
             <NumericInfo>{mealsWithinDiet}</NumericInfo>
             <TextInfo>meals within your diet</TextInfo>
           </SquaredBox>
 
-          <SquaredBox style={{ backgroundColor: "#F4E6E7" }}>
+          <SquaredBox            
+           style={{ backgroundColor: "#F4E6E7" }}>
             <NumericInfo>{mealsOutsideDiet}</NumericInfo>
             <TextInfo>meals outside your diet</TextInfo>
           </SquaredBox>
         </SquaredBoxesContainer>
       </General>
+     
     </Container>
   );
 };
