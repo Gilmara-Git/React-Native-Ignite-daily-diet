@@ -10,7 +10,7 @@ import OpenStatisticsArrow from "@assets/openArrow.svg";
 
 type StatisticProps = StatisticStyleProps & {
   arrowColor: string;
-  percentage: number;
+  percentage: string;
   textInfo: string;
   onClick: ()=>void
 

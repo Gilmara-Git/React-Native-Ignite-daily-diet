@@ -30,7 +30,7 @@ export const Feedback = ({navigation }:FeedbackNavigationProps)=>{
 
 
     const handleBackHome = ()=>{
-        navigation.navigate("show_meal", {  activeButton })
+        navigation.navigate("home")
     }
 
     useEffect(()=>{

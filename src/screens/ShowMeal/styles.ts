@@ -95,3 +95,11 @@ export const BottomContainer = styled.View`
 
 
 `
+
+export const ButtonsRow =  styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+`

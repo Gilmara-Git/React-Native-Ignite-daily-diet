@@ -54,19 +54,18 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
   const [time, setTime] = useState("");
   const [dateString, setDateString] = useState("");
   const [mode, setMode] = useState<DateTimePickerMode>("date"); // allows to switch to date and time
-  const [showTime, setShowTime] = useState(false);
-  const [showDate, setShowDate] = useState(false);
+  const [showPickerTime, setShowPickerTime] = useState(false);
+  const [showPickerDate, setShowPickerDate] = useState(false);
   
   const showMode = (currentMode: DateTimePickerMode) => {
     setMode(currentMode);
     if(currentMode === "date"){
-      setShowDate(true);
-      setShowTime(false)
+      setShowPickerDate(true);
+      setShowPickerTime(false)
     }else {
-      setShowDate(false);
-      setShowTime(true)
+      setShowPickerDate(false);
+      setShowPickerTime(true)
     } 
-
   };
 
   const onDateOrTimePickerChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {   
@@ -74,16 +73,16 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
    
     let tempDate = new Date(String(currentDate));
     if (mode === "date") {
-      setShowDate(Platform.OS === "ios");
+      setShowPickerDate(Platform.OS === "ios");
       const usDate = getUsDate(tempDate);     
       setDateString(usDate);
-      setShowDate(false);
+      setShowPickerDate(false);
     } else {
      
-      setShowTime(Platform.OS === "ios");
+      setShowPickerTime(Platform.OS === "ios");
       const formattedTime  = getUsTime(tempDate);    
       setTime(formattedTime);
-      setShowTime(false);
+      setShowPickerTime(false);
     }
   };
 
@@ -156,7 +155,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
   };
 
   const handleBlur = (value: string) => {    
-    value === 'date' ? setShowDate(false) : setShowTime(false);
+    value === 'date' ? setShowPickerDate(false) : setShowPickerTime(false);
   };
 
   return (
@@ -212,7 +211,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                 </FieldHolder>
 
                 <FieldWrapper direction="row" justify="space-between">
-                  {showDate ? (
+                  {showPickerDate ? (
                     <FieldHolder style={{ alignItems: 'center', justifyContent: 'center', width: '50%'}}>
                         <Label>Select the date</Label>
                       <DateTimePicker
@@ -239,7 +238,7 @@ export const NewMeal = ({ navigation }: NewMealNavigationProps) => {
                   )}
 
 
-                    {showTime ? (
+                    {showPickerTime ? (
                       
                       <FieldHolder style={{ alignItems: 'center', justifyContent: 'center',  width: '50%'}}>
                         <Label>Select the time</Label>
