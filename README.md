@@ -5,7 +5,7 @@
 Figma Layout:
 [Millena Kupsinskü Martins](https://www.linkedin.com/in/millenakmartins/)
 
-<img src="" alt="layout">
+<img src="https://user-images.githubusercontent.com/66445234/230697942-9fcb3cd3-a4f4-4435-b798-9b43bf767306.png" alt="layout">
 
 <img src="" alt="daily-diet"/>
 
@@ -15,13 +15,19 @@ Figma Layout:
 
 **React Native** project developed during my **Ignite bootcamp** with [Rocketseat](https://www.rocketseat.com.br/).
 
-- To be defined
-  
+- This app allows you to register you daily meals and helps you keep track of meals **within** or **outside** your diet, which is shown on the **Statistics** page.
+- You can **add**, **edit** and **delete** a meal. 
+- You can set a **profile picture** by uploading it from your device.
+- you can select a **date** and **time** instead of having to type them.
+
  # Motivation
 
-<!-- - Learn how to style the interfaces/components using the **lib styled components** for react native.
-- Learn how to work with ***Expo Image Picker*** to allow the user to upload an image from their mobile device.  -->
+
 - Practice ***React Navigation v6*** (***Stack Navigation*** was used)
+- Practice styling with **styled-components** 
+- Practice **AsyncStorage** to store meals and profile picture.
+- Learn how to work with **Expo Image Picker**
+- Learn how to work with **DateTimePicker**
 - Interact with the Dev Community, learn together and progress as a Developer.
 - Keep committed with my goals.</br>
 
@@ -36,6 +42,7 @@ Figma Layout:
 - Expo Image Picker
 - Styled Components
 - AsyncStorage
+- DateTimePicker
 - png images(strategy of 3 different sizes)
 - "react-native-svg-transformer"
 
