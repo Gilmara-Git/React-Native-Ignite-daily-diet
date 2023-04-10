@@ -37,6 +37,7 @@ export const StatisticsScreen = ({ navigation, ...rest }: StatisticsNavigationPr
   const [ mealsWithinDiet, setMealsWithinDiet ] = useState('');
   const [ mealsOutsideDiet, setMealsOutsideDiet ] = useState('');
   const [ bestMealsSequenceInDiet , setBestMealsSequenceInDiet ] = useState('');
+ 
   
  const { width } = useWindowDimensions();
   const { params } = useRoute();
@@ -80,15 +81,16 @@ export const StatisticsScreen = ({ navigation, ...rest }: StatisticsNavigationPr
 
       meals.forEach(meal =>{
         if(meal.withinDiet === true){
-          maxCount['max'] =  initialCount;
+
           initialCount++;
-        }else if(meal.withinDiet === false){
           if(initialCount > maxCount['max']){
             maxCount['max'] =  initialCount;
           }
+        }else if(meal.withinDiet === false){       
+         
           initialCount = 0;
-          setBestMealsSequenceInDiet(String(maxCount['max']));
         }
+        setBestMealsSequenceInDiet(String(maxCount['max']));
       })
     };
 
