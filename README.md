@@ -7,7 +7,7 @@ Figma Layout:
 
 <img src="https://user-images.githubusercontent.com/66445234/230697942-9fcb3cd3-a4f4-4435-b798-9b43bf767306.png" alt="layout">
 
-<img src="https://user-images.githubusercontent.com/66445234/231011900-f5402f75-cdaa-47a1-aeb1-59c60324b92a.mp4" alt="daily-diet"/>
+<img src="https://user-images.githubusercontent.com/66445234/231018857-5c5423f1-ab98-442c-963a-aba3ac23827f.gif" alt="daily-diet"/>
 
 </div>
 
