@@ -16,7 +16,7 @@ export const General = styled.View`
   flex-grow: 1;
   align-items: center;
   padding-right: 12px;
-  /* padding-left: 24px; */
+  
 `;
 
 export const GeneralText = styled.Text`
@@ -30,7 +30,7 @@ export const GeneralText = styled.Text`
   margin-bottom: 20px;
 `;
 
-export const RectangleBox = styled(TouchableOpacity)`
+export const RectangleBox = styled.View`
   width: 327px;
   height: 89px;
   border-radius: 8px;
@@ -64,7 +64,7 @@ export const SquaredBoxesContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const SquaredBox = styled(TouchableOpacity)`
+export const SquaredBox = styled.View`
   width: 157px;
   height: 107px;
   border-radius: 8px;

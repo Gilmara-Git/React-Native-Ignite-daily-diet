@@ -3,7 +3,7 @@ import { TouchableOpacityProps } from 'react-native';
 import React from 'react';
 
 type ModalProps = TouchableOpacityProps &{   
-    title: string;
+    title: string | number | undefined;
     children?: React.ReactNode;
     onCancel: ()=>void;
     height: number;

@@ -12,13 +12,13 @@ export type RoutesParamList = {
     feedback: {
         activeButton: boolean;
     },
-    show_meal: {
-        percentage: number,       
-        id: string
+    show_meal: {          
+        id: string,
+        withinDiet: boolean
     },
-    edit_meal: {
-        percentage: number,       
-        id: string
+    edit_meal: {        
+        id: string,
+        withinDiet: boolean
     }
 
 }

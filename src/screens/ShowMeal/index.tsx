@@ -29,19 +29,21 @@ type ShowMealNavigationProps = {
   navigation: NativeStackNavigationProp<RoutesParamList, "show_meal">;
 };
 
-type ShowMealType = {
-  percentage: number;
+type ShowMealType = { 
   id: string;
+  withinDiet: boolean;
 };
 export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
   const [mealName, setMealName] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
-  const [showModal, setShowModal] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>();
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const { params } = useRoute();
-  const { percentage, id } = params as ShowMealType;
+  const { id, withinDiet } = params as ShowMealType;
+
+ 
 
   const handleReturnHome = () => {
     navigation.navigate("home");
@@ -53,8 +55,8 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
 
   const handleEditMeal = () => {
     navigation.navigate("edit_meal", {
-      percentage,
       id,
+      withinDiet
     });
   };
 
@@ -89,7 +91,7 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
       <ColoredHeader
         height={132}
         backgroundColor={
-          percentage > 50
+          withinDiet
             ? theme.COLORS.brand_green_light
             : theme.COLORS.brand_red_light
         }
@@ -110,13 +112,13 @@ export const ShowMeal = ({ navigation }: ShowMealNavigationProps) => {
         <LabelContainer>
           <Dot
             fill={
-              percentage > 50
+              withinDiet
                 ? theme.COLORS.brand_green_dark
                 : theme.COLORS.brand_red_dark
             }
           />
           <LabelText>
-            {percentage > 50 ? "Within Diet" : "Outside Diet"}
+            {withinDiet ? "Within Diet" : "Outside Diet"}
           </LabelText>
         </LabelContainer>
       </ContentContainer>
