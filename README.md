@@ -11,9 +11,16 @@ Figma Layout:
 
 </div>
 
+
+
+# Menu
+- <a href="#about">About</a>
+- <a href="#motivation">Motivation</a>
+- <a href="#technologies">Technologies</a>
+- <a href="#to-run-the-project">Run the project</a>
 # About
 
-**React Native** project developed during my **Ignite bootcamp** with [Rocketseat](https://www.rocketseat.com.br/).
+**React Native** project developed as one of the challenges during my **Ignite bootcamp** with [Rocketseat](https://www.rocketseat.com.br/).
 
 - This app allows you to register you daily meals and helps you keep track of meals **within** or **outside** your diet, which is shown on the **Statistics** page.
 - You can **add**, **edit** and **delete** a meal. 
