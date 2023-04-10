@@ -58,11 +58,11 @@ export const Home = ({ navigation }: HomeNavigationProps) => {
   };
 
   const handleShowMealNavigation = (  
-    id: string
+    id: string, withinDiet: boolean
   ) => {
     navigation.navigate("show_meal", {
-      percentage: Number(`${percentage}`),
       id,
+      withinDiet
     });
   };
 
@@ -152,7 +152,7 @@ export const Home = ({ navigation }: HomeNavigationProps) => {
                   indicatorColor={item.withinDiet}
                   onPress={() =>
                     handleShowMealNavigation(
-                      item.id
+                      item.id, item.withinDiet
                     )
                   }
                 />

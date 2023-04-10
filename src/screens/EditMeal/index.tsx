@@ -19,8 +19,7 @@ import { RoutesParamList } from "@routes/routesTypes";
 import {
   useWindowDimensions, 
   TouchableWithoutFeedback,
-  Keyboard,
-  Alert,
+  Keyboard, 
   KeyboardAvoidingView,
   Platform,
   ScrollView
@@ -38,8 +37,8 @@ type NewMealNavigationProps = {
 };
 
 type EditMealParams = {
-  id: string;
-  percentage: string;
+  id: string; 
+  withinDiet: boolean;
 }
 
 export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
@@ -56,7 +55,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
   const [showPickerTime, setShowPickerTime] = useState(false);
   const [showPickerDate, setShowPickerDate] = useState(false);
   const { params } =  useRoute();
-  const { id, percentage } = params as EditMealParams;
+  const { id, withinDiet } = params as EditMealParams;
 
 
   const showMode = (currentMode: DateTimePickerMode) => {
@@ -89,7 +88,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
   };
   
   const handleReturnHome = () => {
-    navigation.navigate('home');
+    navigation.navigate('show_meal', { id: id, withinDiet: withinDiet });
   };
 
   const handleMealName = (value: string) => {
@@ -119,7 +118,7 @@ export const EditMeal = ({ navigation }: NewMealNavigationProps) => {
 
     await editMeal(updatedMeal);
 
-    navigation.navigate("show_meal", { id: id, percentage: Number(`${percentage}`) });
+    navigation.navigate("show_meal", { id: id,withinDiet: updatedMeal.withinDiet });
   } 
  
   const handleFocus = (value: DateTimePickerMode) => {
